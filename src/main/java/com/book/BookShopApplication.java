@@ -1,65 +1,86 @@
 package com.book;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import com.book.impl.UserServiceImpl;
+import com.book.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
-import com.book.entity.User;
-import com.book.security.config.SecurityInitializer;
-import com.book.security.entity.Role;
-import com.book.security.entity.UserRole;
-import com.book.security.impl.SecurityUtility;
-import com.book.security.repo.UserService;
+import org.springframework.context.annotation.ComponentScan;
 
-/*@ComponentScan(basePackages = {
-        "com.book.security.config",
+import com.book.entity.User;
+import com.book.entity.Role;
+import com.book.entity.UserRole;
+import com.book.impl.SecurityUtility;
+import com.book.repository.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@ComponentScan(basePackages = {
+        "com.book.config.security",
         "com.book.controller",
-        "com.book.entity",
-        "com.book.security.entity", 
-        "com.book.security.impl", 
-        "com.book.security.repo"
-        })*/
+		"com.book.entity",
+		"com.book.service",
+		"com.book.impl",
+        "com.book.repository"
+        })
 @SpringBootApplication
-@Import(SecurityInitializer.class)
 public class BookShopApplication implements CommandLineRunner{
 	
 	@Autowired
 	private UserService userService;
-	public static void main(String[] args) {
+	@Autowired
+    private RoleService roleService;
+
+    public static void main(String[] args) {
 		SpringApplication.run(BookShopApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user1 = new User();
-		user1.setFirstName("John");
-		user1.setLastName("Adams");
-		user1.setUsername("rakib");
-		user1.setPassword(SecurityUtility.passwordEncoder().encode("rakib"));
-		user1.setEmail("rakibdiu2015@gmail.com");
-		Set<UserRole> userRoles = new HashSet<>();
-		Role role1= new Role();
-		role1.setRoleId(1);
-		role1.setName("ROLE_USER");
-		userRoles.add(new UserRole(user1, role1));
-		userService.createUser(user1, userRoles);	
-		
-		User user2 = new User();
-		user2.setUsername("admin");
-		user2.setPassword(SecurityUtility.passwordEncoder().encode("admin"));
-		user2.setEmail("1000300@daffodil.ac");
-		Set<UserRole> userRole = new HashSet<>();
-		Role role2= new Role();
-		role2.setRoleId(0);
-		role2.setName("ROLE_ADMIN");
-		userRole.add(new UserRole(user2, role2));
-		
-		userService.createUser(user2, userRole);
-
+        initializer();
 	}
 
+	private void initializer () throws Exception {
+		// Creating Roles
+		Role role1 = new Role();
+		role1.setName("ROLE_USER");
+		roleService.saveRole(role1);
+
+        role1 = new Role();
+        role1.setName("ROLE_ADMIN");
+        roleService.saveRole(role1);
+
+        // Creating Users
+		User user1 = new User();
+		user1.setFirstName("Jahadul");
+		user1.setLastName("Rakib");
+		user1.setUsername("jahadul_rakib");
+		user1.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
+		user1.setEmail("rakibdiu2015@gmail.com");
+		List<UserRole> userRoles = new ArrayList<>();
+		UserRole userRole1 = new UserRole(user1, roleService.getRoleByName("ROLE_USER"));
+		roleService.saveUserRole(userRole1);
+		userRoles.add(userRole1);
+		UserRole userRole2 = new UserRole(user1, roleService.getRoleByName("ROLE_ADMIN"));
+        userRoles.add(userRole2);
+        roleService.saveUserRole(userRole2);
+		userService.createUser(user1);
+
+        user1 = new User();
+        user1.setFirstName("Syed Mainul");
+        user1.setLastName("Hasan");
+        user1.setUsername("mainul35");
+        user1.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
+        user1.setEmail("mainuls18@gmail.com");
+        userRoles = new ArrayList<>();
+        userRole1 = new UserRole(user1, roleService.getRoleByName("ROLE_USER"));
+        roleService.saveUserRole(userRole1);
+        userRoles.add(userRole1);
+        userRole2 = new UserRole(user1, roleService.getRoleByName("ROLE_ADMIN"));
+        userRoles.add(userRole2);
+        roleService.saveUserRole(userRole2);
+        userService.createUser(user1);
+	}
 }

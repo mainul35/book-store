@@ -2,6 +2,8 @@ package com.book.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.book.impl.UserSecurityService;
+import com.book.repository.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.book.security.impl.UserSecurityService;
-import com.book.security.repo.UserService;
 
 @Controller
 @RequestMapping("/admin")
