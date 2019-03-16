@@ -1,6 +1,8 @@
 
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="common/header :: common-header" />
 
 <body>
@@ -17,8 +19,10 @@
 				<img src="/image/logo.png" class="img-responsive" />
 			</div>
 		</div>
-		<hr style="position: absolute; width: 85%; height: 6px; background-color: #333; z-index: -1; margin-top: -40px;" />
-		<img class="img-responsive" src="/image/wood.png" style="margin-top: -200px;" />
+		<hr
+			style="position: absolute; width: 86%; height: 6px; background-color: #333; z-index: -1; margin-top: -40px;" />
+		<img class="img-responsive" src="/image/wood.png"
+			style="z-index: -1; margin-top: -80px;" />
 
 		<div class="row" style="margin-top: 60px;">
 			<div class="col-xs-9 col-xs-offset-3">
@@ -88,7 +92,8 @@
 							<div class="panel panel-default" style="border: none;">
 								<div class="panel-body"
 									style="background-color: #ededed; margin-top: 20px;">
-									<div th:if="${param.error != null}" style="color:red;">Incorrect username or password.</div>
+									<div th:if="${param.error != null}" style="color: red;">Incorrect
+										username or password.</div>
 									<form th:action="@{/login}" method="post">
 										<div class="form-group">
 											<label for="username">* Username: </label> <input
@@ -119,8 +124,14 @@
 							<div class="panel panel-default" style="border: none;">
 								<div class="panel-body"
 									style="background-color: #ededed; margin-top: 20px;">
-									<div th:if="${emailNotExist}" class="alert alert-danger">Email doesn't exist.</div>
-									<div th:if="${forgetPasswordEmailSent}" class="alert alert-success">Email sent.</div>
+									<div th:if="${emailNotExist}" class="alert alert-danger">Email
+										doesn't exist.</div>
+									<div class="alert alert-info" th:if="${emailSents}">An
+										email has been sent to the email address you just registered.
+										Please validate your email address and update your password
+										information.</div>
+									<div th:if="${forgetPasswordEmailSent}"
+										class="alert alert-success">Email sent.</div>
 									<form th:action="@{/forgetPassword}" method="post">
 										<div class="form-group">
 											<label for="recoverEmail">* Your Email: </label> <input

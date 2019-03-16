@@ -2,6 +2,7 @@ package com.book.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,9 @@ import com.book.security.impl.UserSecurityService;
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
+	private Environment env;
+	
+	@Autowired
 	private UserSecurityService userSecurityService;
 
 	private BCryptPasswordEncoder passwordEncoder() {
@@ -28,27 +32,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/css/**",
 			"/js/**",
 			"/image/**",
+			"/fonts/**",
+			"/admin/css/**",
+			"/admin/js/**",
+			"/admin/img/**",
+			"/admin/assets/**",
+			"/admin/contentform/**",
+			"/admin/fonts/**",
+			"/",
 			"/newUser",
 			"/forgetPassword",
-//			"/login",
-			"/fonts/**"
+			"/login",
+			"/admin/",
+			"/admin/logIn"
 	};
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-            .csrf().disable().cors().disable()
-			.authorizeRequests().
-			antMatchers("/css/**", "/js/**", "/image/**", "/fonts/**").permitAll()
-//			antMatchers(PUBLIC_MATCHERS).
-//			permitAll().
+			.authorizeRequests()
+			.antMatchers(PUBLIC_MATCHERS).permitAll()
+//			.antMatchers("/admin/index/**").hasAnyRole("ROLE_ADMIN")
 			.anyRequest().authenticated()
-		.and()
-			.formLogin()
-			.loginPage("/login")
-            .failureUrl("/login?error")
-            .defaultSuccessUrl("/")
-            .permitAll()
+		    .and()
+			.csrf().disable().cors().disable()
+			.formLogin().failureUrl("/login?error")
+			.defaultSuccessUrl("/")
+			.loginPage("/login").permitAll()
 			.and()
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/?logout").deleteCookies("remember-me").permitAll()

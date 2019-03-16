@@ -1,4 +1,5 @@
 package com.book.controller;
+
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -72,7 +73,7 @@ public class HomeController {
 
 		String token = UUID.randomUUID().toString();
 		userService.createPasswordResetTokenForUser(user, token);
-		
+
 		String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 
 		SimpleMailMessage emails = mailConstructor.constructResetTokenEmail(appUrl, request.getLocale(), token, user,
@@ -80,7 +81,7 @@ public class HomeController {
 
 		mailSender.send(emails);
 
-		model.addAttribute("emailSent", "true");
+		model.addAttribute("emailSents", "true");
 
 		return "myAccount";
 	}
@@ -132,7 +133,7 @@ public class HomeController {
 
 		model.addAttribute("emailSent", "true");
 
-		return "myAccount";
+		return "myAccount"; 
 	}
 
 	@RequestMapping("/newUser")
@@ -143,22 +144,22 @@ public class HomeController {
 			String message = "Invalid Token.";
 			model.addAttribute("message", message);
 			return "redirect:/badRequest";
+		} else {
+
+			User user = passToken.getUser();
+			String username = user.getUsername();
+
+			UserDetails userDetails = userSecurityService.loadUserByUsername(username);
+
+			Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,
+					userDetails.getPassword(), userDetails.getAuthorities());
+
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+
+			model.addAttribute("user", user);
+
+			model.addAttribute("classActiveEdit", true);
+			return "myProfile";
 		}
-		else {
-
-		User user = passToken.getUser();
-		String username = user.getUsername();
-
-		UserDetails userDetails = userSecurityService.loadUserByUsername(username);
-
-		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
-				userDetails.getAuthorities());
-
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-
-		model.addAttribute("user", user);
-
-		model.addAttribute("classActiveEdit", true);
-		return "myProfile";
-	}}
+	}
 }

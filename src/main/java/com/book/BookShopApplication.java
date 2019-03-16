@@ -7,25 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-
 import com.book.entity.User;
-import com.book.security.config.SecurityConfig;
 import com.book.security.config.SecurityInitializer;
 import com.book.security.entity.Role;
 import com.book.security.entity.UserRole;
 import com.book.security.impl.SecurityUtility;
 import com.book.security.repo.UserService;
 
-@ComponentScan(basePackages = {
+/*@ComponentScan(basePackages = {
         "com.book.security.config",
         "com.book.controller",
         "com.book.entity",
         "com.book.security.entity", 
         "com.book.security.impl", 
         "com.book.security.repo"
-        })
+        })*/
 @SpringBootApplication
 @Import(SecurityInitializer.class)
 public class BookShopApplication implements CommandLineRunner{
@@ -41,15 +38,28 @@ public class BookShopApplication implements CommandLineRunner{
 		User user1 = new User();
 		user1.setFirstName("John");
 		user1.setLastName("Adams");
-		user1.setUsername("n");
-		user1.setPassword(SecurityUtility.passwordEncoder().encode("n"));
+		user1.setUsername("rakib");
+		user1.setPassword(SecurityUtility.passwordEncoder().encode("rakib"));
 		user1.setEmail("rakibdiu2015@gmail.com");
 		Set<UserRole> userRoles = new HashSet<>();
 		Role role1= new Role();
 		role1.setRoleId(1);
 		role1.setName("ROLE_USER");
 		userRoles.add(new UserRole(user1, role1));
-		userService.createUser(user1, userRoles);		
+		userService.createUser(user1, userRoles);	
+		
+		User user2 = new User();
+		user2.setUsername("admin");
+		user2.setPassword(SecurityUtility.passwordEncoder().encode("admin"));
+		user2.setEmail("1000300@daffodil.ac");
+		Set<UserRole> userRole = new HashSet<>();
+		Role role2= new Role();
+		role2.setRoleId(0);
+		role2.setName("ROLE_ADMIN");
+		userRole.add(new UserRole(user2, role2));
+		
+		userService.createUser(user2, userRole);
+
 	}
 
 }
