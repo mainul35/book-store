@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment="common-header">
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -38,7 +39,7 @@
 								<li><a href="#">FAQ</a></li>
 
 							</ul></li>
-						<form class="navbar-form">
+						<form class="navbar-form" role="search">
 							<div class="form-group">
 								<input type="text" name="keyword" class="form-control"
 									placeholder="Book title" />
@@ -46,13 +47,12 @@
 							<button type="submit" class="btn btn-default">Search</button>
 						</form>
 					</ul>
-					<th:block sec:authorize="isAuthenticated()">
-						<h1>asdfghjkl</h1>
-					</th:block>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#">SHOPPING CART</a></li>
-						<li sec:authorize="isAnonymous()"><a th:href="@{/login}">MY ACCOUNT</a></li>
-						<li sec:authorize="isAuthenticated()"><a th:href="@{/myProfile}">MY ACCOUNT</a></li>
+						<li sec:authorize="isAnonymous()"><a th:href="@{/login}">MY
+								ACCOUNT</a></li>
+						<li sec:authorize="isAuthenticated()"><a
+							th:href="@{/myProfile}">MY ACCOUNT</a></li>
 						<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">LOGOUT</a></li>
 					</ul>
 				</div>
@@ -61,11 +61,10 @@
 			<!--/.container-fluid -->
 		</nav>
 	</div>
-	
 	<div th:fragment="body-bottom-scripts">
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
 	</div>
 </body>
 </html>
