@@ -1,19 +1,20 @@
-package com.book.security.impl;
-import java.util.Set;
+package com.book.impl;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.book.entity.User;
-import com.book.security.entity.PasswordResetToken;
-import com.book.security.entity.UserRole;
-import com.book.security.repo.PasswordResetTokenRepository;
-import com.book.security.repo.RoleRepository;
-import com.book.security.repo.UserRepository;
-import com.book.security.repo.UserService;
+import com.book.entity.PasswordResetToken;
+import com.book.entity.UserRole;
+import com.book.repository.PasswordResetTokenRepository;
+import com.book.repository.RoleRepository;
+import com.book.repository.UserRepository;
+import com.book.repository.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 	
@@ -46,23 +47,22 @@ public class UserServiceImpl implements UserService{
 	public User findByEmail (String email) {
 		return userRepository.findByEmail(email);
 	}
-	
+
 	@Override
-	public User createUser(User user, Set<UserRole> userRoles){
+	public User createUser(User user) throws Exception {
 		User localUser = userRepository.findByUsername(user.getUsername());
-		
 		if(localUser != null) {
-			LOG.info("user {} already exists. Nothing will be done.", user.getUsername());
-		} else {
-			for (UserRole ur : userRoles) {
-				roleRepository.save(ur.getRole());
-			}
-			
-			user.getUserRoles().addAll(userRoles);
-			
+			LOG.error("username {} already taken.", user.getUsername());
+			throw new Exception("Username already taken.");
+		}
+		localUser = userRepository.findByEmail(user.getEmail());
+		if (localUser != null) {
+            LOG.error("Email address {} already registered.", user.getEmail());
+            throw  new  Exception("Email address already registered.");
+        }
+		else {
 			localUser = userRepository.save(user);
 		}
-		
 		return localUser;
 	}
 	
@@ -70,5 +70,4 @@ public class UserServiceImpl implements UserService{
 	public User save(User user) {
 		return userRepository.save(user);
 	}
-
 }

@@ -1,4 +1,4 @@
-package com.book.security.impl;
+package com.book.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.book.entity.User;
-import com.book.security.repo.UserRepository;
+import com.book.repository.UserRepository;
 
 @Service
 public class UserSecurityService implements UserDetailsService{

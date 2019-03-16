@@ -1,4 +1,4 @@
-package com.book.security.repo;
+package com.book.repository;
 
 import java.util.Date;
 import java.util.stream.Stream;
@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.book.entity.User;
-import com.book.security.entity.PasswordResetToken;
+import com.book.entity.PasswordResetToken;
 
 @Repository
 public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, Long> {

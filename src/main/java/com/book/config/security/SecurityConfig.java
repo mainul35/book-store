@@ -1,4 +1,4 @@
-package com.book.security.config;
+package com.book.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -8,10 +8,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.book.security.impl.SecurityUtility;
-import com.book.security.impl.UserSecurityService;
+import com.book.impl.SecurityUtility;
+import com.book.impl.UserSecurityService;
 
 @Configuration
 @EnableWebSecurity
@@ -19,6 +20,7 @@ import com.book.security.impl.UserSecurityService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserSecurityService userSecurityService;
+	private AuthenticationSuccessHandler successHandler;
 
 	private BCryptPasswordEncoder passwordEncoder() {
 		return SecurityUtility.passwordEncoder();
@@ -46,6 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.formLogin()
 			.loginPage("/login")
+			.loginProcessingUrl("/login-processing")
+			.usernameParameter("username")
+			.passwordParameter("password")
+			.successHandler(successHandler)
             .failureUrl("/login?error")
             .defaultSuccessUrl("/")
             .permitAll()

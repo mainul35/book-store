@@ -1,9 +1,8 @@
 package com.book.controller;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
+
+import com.book.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,13 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.book.entity.User;
-import com.book.security.entity.PasswordResetToken;
-import com.book.security.entity.Role;
-import com.book.security.entity.UserRole;
-import com.book.security.impl.MailConstructor;
-import com.book.security.impl.SecurityUtility;
-import com.book.security.impl.UserSecurityService;
-import com.book.security.repo.UserService;
+import com.book.entity.PasswordResetToken;
+import com.book.entity.UserRole;
+import com.book.impl.MailConstructor;
+import com.book.impl.SecurityUtility;
+import com.book.impl.UserSecurityService;
+import com.book.repository.UserService;
 
 @Controller
 public class HomeController {
@@ -33,12 +31,12 @@ public class HomeController {
 
 	@Autowired
 	private MailConstructor mailConstructor;
-
 	@Autowired
 	private UserService userService;
-
 	@Autowired
 	private UserSecurityService userSecurityService;
+	@Autowired
+	private RoleService roleService;
 
 	@RequestMapping("/")
 	public String index() {
@@ -49,6 +47,11 @@ public class HomeController {
 	public String login(Model model) {
 		model.addAttribute("classActiveLogin", true);
 		return "myAccount";
+	}
+
+	@RequestMapping("/dashboard")
+	public String dashboard () {
+		return "dashboard";
 	}
 
 	@RequestMapping("/forgetPassword")
@@ -112,13 +115,10 @@ public class HomeController {
 
 		String encryptedPassword = SecurityUtility.passwordEncoder().encode(password);
 		user.setPassword(encryptedPassword);
-
-		Role role = new Role();
-		role.setRoleId(1);
-		role.setName("ROLE_USER");
-		Set<UserRole> userRoles = new HashSet<>();
-		userRoles.add(new UserRole(user, role));
-		userService.createUser(user, userRoles);
+		
+		List<UserRole> userRoles = new ArrayList<>();
+		userRoles.add(new UserRole(user, roleService.getRoleByName("ROLE_USER")));
+		userService.createUser(user);
 
 		String token = UUID.randomUUID().toString();
 		userService.createPasswordResetTokenForUser(user, token);

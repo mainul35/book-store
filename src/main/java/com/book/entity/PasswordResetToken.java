@@ -1,4 +1,4 @@
-package com.book.security.entity;
+package com.book.entity;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-
-import com.book.entity.User;
 
 @Entity
 public class PasswordResetToken {

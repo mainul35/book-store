@@ -1,4 +1,4 @@
-package com.book.security.entity;
+package com.book.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.book.entity.User;
 
 @Entity
 @Table(name="user_role")
@@ -27,7 +25,9 @@ public class UserRole {
 	@JoinColumn(name="role_id")
 	private Role role;
 	
-	public UserRole(){}
+	public UserRole(){
+		this.userRoleId = System.currentTimeMillis();
+	}
 	
 	public UserRole(User user, Role role) {
 		this.user = user;

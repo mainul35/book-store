@@ -1,10 +1,11 @@
-package com.book.security.repo;
+package com.book.repository;
 
-import java.util.Set;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 import com.book.entity.User;
-import com.book.security.entity.PasswordResetToken;
-import com.book.security.entity.UserRole;
+import com.book.entity.PasswordResetToken;
+import com.book.entity.UserRole;
 
 @Repository
 public interface UserService {
@@ -16,7 +17,7 @@ public interface UserService {
 	
 	User findByEmail (String email);
 	
-	User createUser(User user, Set<UserRole> userRoles) throws Exception;
+	public User createUser(User user) throws Exception;
 	
 	User save(User user);
 }
