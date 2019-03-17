@@ -1,6 +1,5 @@
 package com.book;
 
-import com.book.impl.UserServiceImpl;
 import com.book.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.book.entity.User;
 import com.book.entity.Role;
-import com.book.entity.UserRole;
 import com.book.impl.SecurityUtility;
 import com.book.repository.UserService;
 
@@ -19,6 +17,7 @@ import java.util.List;
 
 @ComponentScan(basePackages = {
         "com.book.config.security",
+        "com.book.config.beans",
         "com.book.controller",
 		"com.book.entity",
 		"com.book.service",
@@ -43,44 +42,40 @@ public class BookShopApplication implements CommandLineRunner{
 	}
 
 	private void initializer () throws Exception {
-		// Creating Roles
-		Role role1 = new Role();
-		role1.setName("ROLE_USER");
-		roleService.saveRole(role1);
-
-        role1 = new Role();
-        role1.setName("ROLE_ADMIN");
+        //Creating roles
+        Role role1 = new Role();
+        role1.setName("ROLE_USER");
         roleService.saveRole(role1);
 
+        Role role2 = new Role();
+        role2.setName("ROLE_ADMIN");
+        roleService.saveRole(role2);
+
         // Creating Users
-		User user1 = new User();
+        System.out.println("Creating User 1...");
+        User user1 = new User();
 		user1.setFirstName("Jahadul");
 		user1.setLastName("Rakib");
 		user1.setUsername("jahadul_rakib");
 		user1.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
 		user1.setEmail("rakibdiu2015@gmail.com");
-		List<UserRole> userRoles = new ArrayList<>();
-		UserRole userRole1 = new UserRole(user1, roleService.getRoleByName("ROLE_USER"));
-		roleService.saveUserRole(userRole1);
-		userRoles.add(userRole1);
-		UserRole userRole2 = new UserRole(user1, roleService.getRoleByName("ROLE_ADMIN"));
-        userRoles.add(userRole2);
-        roleService.saveUserRole(userRole2);
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleService.getRoleByName("ROLE_ADMIN"));
+        roles.add(roleService.getRoleByName("ROLE_USER"));
+        user1.addRoles(roles);
 		userService.createUser(user1);
 
-        user1 = new User();
-        user1.setFirstName("Syed Mainul");
-        user1.setLastName("Hasan");
-        user1.setUsername("mainul35");
-        user1.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
-        user1.setEmail("mainuls18@gmail.com");
-        userRoles = new ArrayList<>();
-        userRole1 = new UserRole(user1, roleService.getRoleByName("ROLE_USER"));
-        roleService.saveUserRole(userRole1);
-        userRoles.add(userRole1);
-        userRole2 = new UserRole(user1, roleService.getRoleByName("ROLE_ADMIN"));
-        userRoles.add(userRole2);
-        roleService.saveUserRole(userRole2);
-        userService.createUser(user1);
-	}
+        System.out.println("Creating User 2...");
+        User user2 = new User();
+        user2.setFirstName("Syed Mainul");
+        user2.setLastName("Hasan");
+        user2.setUsername("mainul35");
+        user2.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
+        user2.setEmail("mainuls18@gmail.com");
+        roles = new ArrayList<>();
+        roles.add(roleService.getRoleByName("ROLE_ADMIN"));
+        roles.add(roleService.getRoleByName("ROLE_USER"));
+        user2.addRoles(roles);
+        userService.createUser(user2);
+    }
 }

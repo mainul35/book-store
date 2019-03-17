@@ -1,11 +1,8 @@
 package com.book.repository;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 import com.book.entity.User;
 import com.book.entity.PasswordResetToken;
-import com.book.entity.UserRole;
 
 @Repository
 public interface UserService {
