@@ -1,5 +1,4 @@
 package com.book.impl;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.book.entity.User;
 import com.book.entity.PasswordResetToken;
-import com.book.entity.UserRole;
 import com.book.repository.PasswordResetTokenRepository;
 import com.book.repository.RoleRepository;
 import com.book.repository.UserRepository;

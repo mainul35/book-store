@@ -20,7 +20,8 @@ import com.book.impl.UserSecurityService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserSecurityService userSecurityService;
-	private AuthenticationSuccessHandler successHandler;
+	@Autowired
+	private SuccessHandler successHandler;
 
 	private BCryptPasswordEncoder passwordEncoder() {
 		return SecurityUtility.passwordEncoder();
@@ -50,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
-//			.antMatchers("/admin/index/**").hasAnyRole("ROLE_ADMIN")
+			.antMatchers("/dashboard/").hasAnyRole("ROLE_USER")
 			.anyRequest().authenticated()
 		.and()
 			.formLogin()
@@ -60,7 +61,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.passwordParameter("password")
 			.successHandler(successHandler)
             .failureUrl("/login?error")
-            .defaultSuccessUrl("/")
             .permitAll()
 			.and()
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -73,5 +73,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
 	}
-
 }

@@ -2,6 +2,7 @@ package com.book.controller;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
+import com.book.entity.Role;
 import com.book.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.book.entity.User;
 import com.book.entity.PasswordResetToken;
-import com.book.entity.UserRole;
 import com.book.impl.MailConstructor;
 import com.book.impl.SecurityUtility;
 import com.book.impl.UserSecurityService;
@@ -51,6 +51,7 @@ public class HomeController {
 
 	@RequestMapping("/dashboard")
 	public String dashboard () {
+		System.out.println("rendering dashboard page...");
 		return "dashboard";
 	}
 
@@ -116,8 +117,8 @@ public class HomeController {
 		String encryptedPassword = SecurityUtility.passwordEncoder().encode(password);
 		user.setPassword(encryptedPassword);
 		
-		List<UserRole> userRoles = new ArrayList<>();
-		userRoles.add(new UserRole(user, roleService.getRoleByName("ROLE_USER")));
+		List<Role> userRoles = new ArrayList<>();
+		userRoles.add(roleService.getRoleByName("ROLE_USER"));
 		userService.createUser(user);
 
 		String token = UUID.randomUUID().toString();
