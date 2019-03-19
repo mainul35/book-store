@@ -49,10 +49,10 @@ public class HomeController {
 		return "myAccount";
 	}
 
-	@RequestMapping("/dashboard")
+	@RequestMapping("/logOut")
 	public String dashboard () {
 		System.out.println("rendering dashboard page...");
-		return "dashboard";
+		return "index";
 	}
 
 	@RequestMapping("/forgetPassword")
