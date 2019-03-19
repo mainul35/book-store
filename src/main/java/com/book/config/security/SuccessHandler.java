@@ -7,8 +7,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +30,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
         //since we have created our custom success handler, its up to us to where
         //we will redirect the user after successfully login
         SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(httpServletRequest, httpServletResponse);
-//        String requestUrl = savedRequest.getRedirectUrl();
-        httpServletResponse.sendRedirect("/dashboard"); //requestUrl!=null?requestUrl:
+//      String requestUrl = savedRequest.getRedirectUrl();
+        httpServletResponse.sendRedirect("/admin/index"); //requestUrl!=null?requestUrl:
     }
 }

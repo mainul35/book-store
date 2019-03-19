@@ -16,6 +16,7 @@ public class User implements UserDetails, Serializable {
      */
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "user_uuid", nullable = false, updatable = false)
     private Long id;
     @Column(name = "username", nullable = false, updatable = false)
@@ -30,16 +31,10 @@ public class User implements UserDetails, Serializable {
     private String phone;
     private boolean enabled = true;
 
-    @ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
-    @JoinTable(name="user_roles",
-            joinColumns = {@JoinColumn(name="user_id", referencedColumnName="user_uuid")},
-            inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="role_uuid")}
-    )
-    @JsonIgnore
-    Set<Role> roles = new HashSet<>();
+    @ManyToOne
+    Role role;
 
     public User () {
-        this.id = System.currentTimeMillis();
     }
     public Long getId() {
         return id;
@@ -99,15 +94,9 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<Role> filteredRoles = new ArrayList();
-        roles.forEach(role -> {
-            filteredRoles.add(role);
-        });
-        return filteredRoles;
-    }
-
-    public void setAuthorities(List<Role> authorities) {
-        this.roles.addAll(authorities);
+        List<Role> roles = new ArrayList<Role>();
+        roles.add(this.role);
+        return roles;
     }
 
     @Override
@@ -136,8 +125,11 @@ public class User implements UserDetails, Serializable {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
-    public void addRoles(List<Role> roles) {
-        this.roles.addAll(roles);
-    }
 }

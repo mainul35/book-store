@@ -59,10 +59,8 @@ public class BookShopApplication implements CommandLineRunner{
 		user1.setUsername("jahadul_rakib");
 		user1.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
 		user1.setEmail("rakibdiu2015@gmail.com");
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-        roles.add(roleService.getRoleByName("ROLE_USER"));
-        user1.addRoles(roles);
+		role2.getUsers().add(user1);
+        user1.setRole(role2);
 		userService.createUser(user1);
 
         System.out.println("Creating User 2...");
@@ -72,10 +70,19 @@ public class BookShopApplication implements CommandLineRunner{
         user2.setUsername("mainul35");
         user2.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
         user2.setEmail("mainuls18@gmail.com");
-        roles = new ArrayList<>();
-        roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-        roles.add(roleService.getRoleByName("ROLE_USER"));
-        user2.addRoles(roles);
+        role2.getUsers().add(user2);
+        user2.setRole(role2);
         userService.createUser(user2);
+        
+        System.out.println("Creating User 3...");
+        User user3 = new User();
+        user3.setFirstName("Tanveer");
+        user3.setLastName("Hasan");
+        user3.setUsername("tanveer");
+        user3.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
+        user3.setEmail("tanveer@gmail.com");
+        role1.getUsers().add(user3);
+        user3.setRole(role1);
+        userService.createUser(user3);
     }
 }

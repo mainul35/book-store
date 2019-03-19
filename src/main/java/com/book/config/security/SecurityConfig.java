@@ -8,9 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import com.book.impl.SecurityUtility;
 import com.book.impl.UserSecurityService;
 
@@ -43,7 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/forgetPassword",
 			"/login",
 			"/admin/",
-			"/admin/logIn"
+			"/admin/logIn",
+			"/logOut",
+			"/book/",
+			"/book/addBook",
+			"/bookList"
 	};
 
 	@Override
@@ -51,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
-			.antMatchers("/dashboard/").hasAnyRole("ROLE_USER")
+			.antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN")
 			.anyRequest().authenticated()
 		.and()
 			.formLogin()
