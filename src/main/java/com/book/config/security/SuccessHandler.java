@@ -31,6 +31,6 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
         //we will redirect the user after successfully login
         SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(httpServletRequest, httpServletResponse);
 //      String requestUrl = savedRequest.getRedirectUrl();
-        httpServletResponse.sendRedirect("/admin/index"); //requestUrl!=null?requestUrl:
+        httpServletResponse.sendRedirect("/admin/logIn"); //requestUrl!=null?requestUrl:
     }
 }
