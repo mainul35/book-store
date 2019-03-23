@@ -20,7 +20,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
         HttpSession session = httpServletRequest.getSession();
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         session.setAttribute("username", authUser.getUsername());
-        session.setAttribute("authorities", authentication.getAuthorities());
+        session.setAttribute("role", authUser.getRole());
         System.out.println("Authenticated user = "+authUser.toString());
 
 
@@ -31,6 +31,6 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
         //we will redirect the user after successfully login
         SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(httpServletRequest, httpServletResponse);
 //      String requestUrl = savedRequest.getRedirectUrl();
-        httpServletResponse.sendRedirect("/admin/logIn"); //requestUrl!=null?requestUrl:
+        httpServletResponse.sendRedirect("/dashboard"); //requestUrl!=null?requestUrl:
     }
 }

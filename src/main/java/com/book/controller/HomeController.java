@@ -49,7 +49,13 @@ public class HomeController extends AppBase {
 		return "index";
 	}
 
-    @RequestMapping("/login")
+	@RequestMapping("/my-account")
+	public String myAccount(Model model) {
+		model.addAttribute("classActiveLogin", true);
+		return "myAccount";
+	}
+
+    @RequestMapping("/home")
     @AclCheck(permissionNames = {Permission.VIEW_BOOKS})
     public String login(Model model) throws Exception {
         super.doAclCheck("login", Model.class);
@@ -57,8 +63,8 @@ public class HomeController extends AppBase {
         return "myAccount";
     }
 
-	@RequestMapping("/logOut")
-	public String dashboard () {
+	@RequestMapping("/logout")
+	public String logout () {
 		System.out.println("rendering dashboard page...");
 		return "index";
 	}
