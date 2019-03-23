@@ -2,8 +2,11 @@ package com.book.controller;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
+import com.book.config.security.permission.AclCheck;
+import com.book.config.security.permission.Permission;
 import com.book.entity.Role;
 import com.book.service.RoleService;
+import com.book.util.AppBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -25,10 +28,9 @@ import com.book.impl.UserSecurityService;
 import com.book.repository.UserService;
 
 @Controller
-public class HomeController {
+public class HomeController extends AppBase {
 	@Autowired
 	private JavaMailSender mailSender;
-
 	@Autowired
 	private MailConstructor mailConstructor;
 	@Autowired
@@ -38,16 +40,22 @@ public class HomeController {
 	@Autowired
 	private RoleService roleService;
 
+	public HomeController(){
+		super.setInstance(this);
+	}
+
 	@RequestMapping("/")
 	public String index() {
 		return "index";
 	}
 
-	@RequestMapping("/login")
-	public String login(Model model) {
-		model.addAttribute("classActiveLogin", true);
-		return "myAccount";
-	}
+    @RequestMapping("/login")
+    @AclCheck(permissionNames = {Permission.VIEW_BOOKS})
+    public String login(Model model) throws Exception {
+        super.doAclCheck("login", Model.class);
+        model.addAttribute("classActiveLogin", true);
+        return "myAccount";
+    }
 
 	@RequestMapping("/logOut")
 	public String dashboard () {

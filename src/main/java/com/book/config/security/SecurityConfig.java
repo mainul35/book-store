@@ -40,9 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/newUser",
 			"/forgetPassword",
 			"/login",
-			"/admin/",
-			"/admin/logIn",
-			"/logOut",
 			"/book/",
 			"/book/addBook",
 			"/bookList"
