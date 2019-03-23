@@ -1,6 +1,9 @@
 package com.book;
 
+import com.book.config.security.permission.Permission;
+import com.book.entity.UserPermission;
 import com.book.service.RoleService;
+import com.book.service.UserPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +16,9 @@ import com.book.impl.SecurityUtility;
 import com.book.repository.UserService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ComponentScan(basePackages = {
         "com.book.config.security",
@@ -31,6 +36,8 @@ public class BookShopApplication implements CommandLineRunner{
 	private UserService userService;
 	@Autowired
     private RoleService roleService;
+	@Autowired
+    UserPermissionService userPermissionService;
 
     public static void main(String[] args) {
 		SpringApplication.run(BookShopApplication.class, args);
@@ -63,6 +70,13 @@ public class BookShopApplication implements CommandLineRunner{
         user1.setRole(role2);
 		userService.createUser(user1);
 
+        for (Permission value : Permission.values()) {
+            UserPermission userPermission = new UserPermission();
+            userPermission.setUsername(user1.getUsername());
+            userPermission.setPermission(value);
+            userPermissionService.save(userPermission);
+        }
+
         System.out.println("Creating User 2...");
         User user2 = new User();
         user2.setFirstName("Syed Mainul");
@@ -73,6 +87,15 @@ public class BookShopApplication implements CommandLineRunner{
         role2.getUsers().add(user2);
         user2.setRole(role2);
         userService.createUser(user2);
+
+        for (Permission value : Permission.values()) {
+            if (!value.equals(Permission.USER_ONLY)) {
+                UserPermission userPermission = new UserPermission();
+                userPermission.setUsername(user2.getUsername());
+                userPermission.setPermission(value);
+                userPermissionService.save(userPermission);
+            }
+        }
         
         System.out.println("Creating User 3...");
         User user3 = new User();
@@ -84,5 +107,10 @@ public class BookShopApplication implements CommandLineRunner{
         role1.getUsers().add(user3);
         user3.setRole(role1);
         userService.createUser(user3);
+
+        UserPermission userPermission = new UserPermission();
+        userPermission.setUsername(user3.getUsername());
+        userPermission.setPermission(Permission.VIEW_BOOKS);
+        userPermissionService.save(userPermission);
     }
 }

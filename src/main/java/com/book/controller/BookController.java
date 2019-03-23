@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.book.util.AppBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ import com.book.repository.BookServiceRepo;
 
 @Controller
 @RequestMapping("/admin/book")
-public class BookController {
+public class BookController extends AppBase {
 
 	@Autowired
 	BookServiceRepo bookService;

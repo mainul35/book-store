@@ -1,5 +1,6 @@
 package com.book.entity;
 
+import com.book.config.security.permission.Permission;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +31,6 @@ public class User implements UserDetails, Serializable {
     private String email;
     private String phone;
     private boolean enabled = true;
-
     @ManyToOne
     Role role;
 
@@ -131,5 +131,4 @@ public class User implements UserDetails, Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-
 }
