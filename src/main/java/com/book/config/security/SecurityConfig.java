@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/admin/js/**",
 			"/admin/img/**",
 			"/admin/assets/**",
-			"/admin/contentform/**",
+			"/admin/contactform/**",
 			"/admin/fonts/**",
 			"/",
 			"/my-account",
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/login",
 			"/book/",
 			"/book/addBook",
-			"/bookList"
+			"/book/bookList"
 	};
 
 	@Override
