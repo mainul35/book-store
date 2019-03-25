@@ -7,6 +7,8 @@ import com.book.entity.Book;
 import com.book.repository.BookRepo;
 import com.book.repository.BookServiceRepo;
 
+import java.util.List;
+
 @Service
 public class BookServiceImpl implements BookServiceRepo {
 
@@ -15,6 +17,11 @@ public class BookServiceImpl implements BookServiceRepo {
 	@Override
 	public Book save(Book book) {
 		return repo.save(book);
+	}
+
+	@Override
+	public List<Book> findAll() {
+		return repo.findAll();
 	}
 
 }

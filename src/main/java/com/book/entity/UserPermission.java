@@ -4,9 +4,6 @@ import com.book.config.security.permission.Permission;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Table(name = "user_permissions")
 public class UserPermission implements Serializable {

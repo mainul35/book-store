@@ -104,7 +104,7 @@
 				<div id="sidebar" class="nav-collapse ">
 					<!-- sidebar menu start-->
 					<ul class="sidebar-menu">
-						<li class="active"><a class="" href="admin/index.html"> <i
+						<li class="active"><a class="" th:href="@{/admin/dashboard}"> <i
 								class="icon_house_alt"></i> <span>Dashboard</span>
 						</a></li>
 						<li class="sub-menu"><a href="javascript:;" class=""> <i
@@ -112,8 +112,8 @@
 								class="menu-arrow arrow_carrot-right"></span>
 						</a>
 							<ul class="sub">
-								<li><a class="" th:href="@{book/addBook}">Add Books</a></li>
-								<li><a class="" href="#">All Books</a></li>
+								<li><a class="" th:href="@{/admin/book/addBook}">Add Books</a></li>
+								<li><a class="" th:href="@{/admin/book/bookList}">All Books</a></li>
 							</ul></li>
 						<li class="sub-menu"><a href="javascript:;" class=""> <i
 								class="icon_desktop"></i> <span>UI Fitures</span> <span

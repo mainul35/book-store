@@ -45,7 +45,7 @@ public class BookShopApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-        initializer();
+      /*  initializer();*/
 	}
 
 	private void initializer () throws Exception {

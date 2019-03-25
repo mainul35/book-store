@@ -25,10 +25,10 @@ public class AdminController extends AppBase {
 		return "admin/login";
 	}
 
-	@AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.VIEW_BOOKS})
+	//@AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.VIEW_BOOKS})
 	@RequestMapping("/dashboard")
 	public String logIn() throws Exception {
-        super.doAclCheck("logIn");
+        //super.doAclCheck("logIn");
 		return "admin/index";
 	}
 }
