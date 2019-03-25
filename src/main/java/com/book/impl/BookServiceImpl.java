@@ -18,7 +18,6 @@ public class BookServiceImpl implements BookServiceRepo {
 	public Book save(Book book) {
 		return repo.save(book);
 	}
-
 	@Override
 	public List<Book> findAll() {
 		return repo.findAll();
