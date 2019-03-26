@@ -18,8 +18,6 @@ import com.book.impl.UserSecurityService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserSecurityService userSecurityService;
-	@Autowired
-	private SuccessHandler successHandler;
 
 	private BCryptPasswordEncoder passwordEncoder() {
 		return SecurityUtility.passwordEncoder();
@@ -37,13 +35,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/admin/contactform/**",
 			"/admin/fonts/**",
 			"/",
+            "/app/**",
+			"/admin/login",
 			"/my-account",
 			"/newUser",
 			"/forgetPassword",
 			"/login",
-			"/book/",
-			"/book/addBook",
-			"/book/bookList"
+			"/login-processing"
 	};
 
 	@Override
@@ -53,15 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.anyRequest().authenticated()
-		.and()
-			.formLogin()
-			.loginPage("/login")
-			.loginProcessingUrl("/login-processing")
-			.usernameParameter("username")
-			.passwordParameter("password")
-			.successHandler(successHandler)
-            .failureUrl("/login?error")
-            .permitAll()
+//		.and()
+//			.formLogin()
+//			.loginPage("/my-account")
+//			.loginProcessingUrl("/login-processing")
+//			.usernameParameter("username")
+//			.passwordParameter("password")
+//			.successHandler(successHandler)
+//            .failureUrl("/login?error")
+//            .permitAll()
 			.and()
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/?logout").deleteCookies("remember-me").permitAll()

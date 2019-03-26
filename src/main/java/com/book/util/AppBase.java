@@ -1,6 +1,7 @@
 package com.book.util;
 
 import com.book.config.security.permission.AclCheck;
+import com.book.config.security.permission.AclException;
 import com.book.config.security.permission.Permission;
 import com.book.entity.User;
 import com.book.entity.UserPermission;
@@ -24,8 +25,13 @@ public abstract class AppBase {
         this.object = object;
     }
 
-    public void doAclCheck(String methodName, Class... args) throws Exception {
-        Method method = object.getClass().getMethod(methodName, args);
+    public void doAclCheck(String methodName, Class... args) throws AclException {
+        Method method = null;
+        try {
+            method = object.getClass().getMethod(methodName, args);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         AclCheck aclCheck = method.getAnnotation(AclCheck.class);
         if (httpSession.getAttribute("username")!=null){
             List<UserPermission> userPermissions = userPermissionService.getPermissionByUsername(httpSession.getAttribute("username").toString());
@@ -41,11 +47,8 @@ public abstract class AppBase {
                 }
             }
             if (!hasPermission) {
-                throw new Exception("Not Permitted!");
+                throw new AclException("Not Permitted!");
             }
         }
-//        Method m=h.getClass().getMethod("sayHello");
-//
-//        MyAnnotation manno=m.getAnnotation(MyAnnotation.class);
     };
 }
