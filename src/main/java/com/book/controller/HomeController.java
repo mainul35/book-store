@@ -1,6 +1,7 @@
 package com.book.controller;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.book.config.security.permission.AclCheck;
 import com.book.config.security.permission.Permission;
@@ -50,8 +51,11 @@ public class HomeController extends AppBase {
 	}
 
 	@RequestMapping("/my-account")
-	public String myAccount(Model model) {
-		model.addAttribute("classActiveLogin", true);
+	public String myAccount(Model model, HttpSession session) {
+        String requestAuthorizer = "" + System.currentTimeMillis();
+	    model.addAttribute("classActiveLogin", true);
+		model.addAttribute("origin", "ROLE_USER_"+requestAuthorizer);
+        session.setAttribute("requestAuthorizer", requestAuthorizer);
 		return "myAccount";
 	}
 

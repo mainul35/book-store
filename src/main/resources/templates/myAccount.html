@@ -94,7 +94,9 @@
 									style="background-color: #ededed; margin-top: 20px;">
 									<div th:if="${param.error != null}" style="color:red;">Incorrect username or password.</div>
 									<form th:action="@{/login-processing}" method="post">
-										<div class="form-group">
+										<input type="hidden" name="req-origin" th:value='${origin}'>
+                                        <input type="hidden" name="mapping" value="user">
+                                        <div class="form-group">
 											<label for="username">* Username: </label> <input
 												required="required" type="text" class="form-control"
 												id="username" name="username" />
