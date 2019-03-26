@@ -1248,7 +1248,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
 
-    };
+    }
 
 }
 
@@ -2390,7 +2390,7 @@ div[data-role="editor-toolbar"] {
 
 }
 
-}
+
 
 .panel.panel-default.panel-heading {
 
@@ -3004,7 +3004,7 @@ div[data-role="editor-toolbar"] {
 
 }
 
-* /Widget-Content */
+/*Widget-Content */
 
 
 
@@ -3360,7 +3360,7 @@ div[data-role="editor-toolbar"] {
 
 /*-----	map-----*/
 
-* Google maps */
+/* Google maps */
 
 
 
@@ -4152,9 +4152,9 @@ div[data-role="editor-toolbar"] {
 
         margin-bottom: -4px;
 
-    };
-
     }
+
+}
 
 
 
