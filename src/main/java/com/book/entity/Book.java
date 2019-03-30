@@ -1,41 +1,59 @@
 package com.book.entity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
-import org.springframework.web.multipart.MultipartFile;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
-public class Book {
+public class Book extends DomainBase{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String title;
-	private String author;
+//	@ElementCollection(fetch = FetchType.EAGER)
+	private String authors;
 	private String publisher;
 	private String publicationDate;
 	private String language;
-	private String category;
+	@OneToOne
+	private Category category = new Category();
 	private int numberOfPages;
 	private String format;
 	private int isbn;
 	private double shippingWeight;
-	private double listPrice;
-	private double ourPrice;
-	private boolean active=true;
+	private BigDecimal originalPrice = new BigDecimal(0);
+
+    private boolean isUsed;
+    private BigDecimal usedPrice = new BigDecimal(0);
+
+    @OneToOne
+    private Offer currentOffer = new Offer();
+
+    private boolean active=true;
 	
 	@Column(columnDefinition="text")
 	private String description;
 	private int inStockNumber;
-	
-	@Transient
-	private MultipartFile bookImage;
 
-	public Long getId() {
+    @Column
+    private String createdBy;
+    @Column
+    private String updatedBy;
+    @Column
+    private Date createdOn;
+    @Column
+    private Date updatedOn;
+	
+	@OneToOne
+	private Attachment photo = new Attachment();
+
+    public Book() {
+        this.id = System.currentTimeMillis();
+    }
+
+    public Long getId() {
 		return id;
 	}
 
@@ -49,14 +67,6 @@ public class Book {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
 	}
 
 	public String getPublisher() {
@@ -83,11 +93,11 @@ public class Book {
 		this.language = language;
 	}
 
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
@@ -123,22 +133,6 @@ public class Book {
 		this.shippingWeight = shippingWeight;
 	}
 
-	public double getListPrice() {
-		return listPrice;
-	}
-
-	public void setListPrice(double listPrice) {
-		this.listPrice = listPrice;
-	}
-
-	public double getOurPrice() {
-		return ourPrice;
-	}
-
-	public void setOurPrice(double ourPrice) {
-		this.ourPrice = ourPrice;
-	}
-
 	public boolean isActive() {
 		return active;
 	}
@@ -163,11 +157,91 @@ public class Book {
 		this.inStockNumber = inStockNumber;
 	}
 
-	public MultipartFile getBookImage() {
-		return bookImage;
-	}
+    @Override
+    public String getCreatedBy() {
+        return this.createdBy;
+    }
 
-	public void setBookImage(MultipartFile bookImage) {
-		this.bookImage = bookImage;
-	}
+    @Override
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @Override
+    public String getUpdatedBy() {
+        return this.updatedBy;
+    }
+
+    @Override
+    public void setUpdatedBy(String updatedBy) {
+        this.createdBy = updatedBy;
+    }
+
+    @Override
+    public Date getCreatedOn() {
+        return this.createdOn;
+    }
+
+    @Override
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    @Override
+    public Date getUpdatedOn() {
+        return this.updatedOn;
+    }
+
+    @Override
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    public String getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(String authors) {
+        this.authors = authors;
+    }
+
+    public BigDecimal getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(BigDecimal originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
+    }
+
+    public BigDecimal getUsedPrice() {
+        return usedPrice;
+    }
+
+    public void setUsedPrice(BigDecimal usedPrice) {
+        this.usedPrice = usedPrice;
+    }
+
+    public Attachment getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Attachment photo) {
+        this.photo = photo;
+    }
+
+    public Offer getCurrentOffer() {
+        return currentOffer;
+    }
+
+    public void setCurrentOffer(Offer currentOffer) {
+        this.currentOffer = currentOffer;
+    }
 }

@@ -7,7 +7,7 @@
 <body>
 <div class="row">
     <form class="form-horizontal" th:action="@{/admin/book/addBook}"
-          method="post" enctype="multipart/form-data">
+          method="post" enctype="multipart/form-data" th:object="${book}">
         <fieldset>
             <legend class="center-block">
                 New Book Information<span style="font-size: small"> * is a
@@ -25,13 +25,12 @@
             </div>
             <!-- author -->
             <div class="form-group">
-                <label class="col-md-2 control-label" for="author">*
+                <label class="col-md-2 control-label" for="authors">*
                     Author</label>
                 <div class="col-md-8">
-                    <input type="text" name="author" class="form-control" id="author"
-                           th:value="${book.author}" required="required"
-                           placeholder="Author"/> <span class="help-block">Author
-								of the book</span>
+                    <input type="text" class="form-control" id="authors" name="authors"
+                           th:value="${book.authors}" required="required"
+                           placeholder="Authors"/> <span class="help-block">e.g.: Paul Deitel, Joyace Ferrell</span>
                 </div>
             </div>
             <!-- publisher -->
@@ -49,9 +48,9 @@
                 <label class="col-md-2 control-label" for="publicationDate">Publication
                     Date</label>
                 <div class="col-md-8">
-                    <input type="date" class="form-control" id="publicationDate"
-                           name="publicationDate" th:value="${book.publicationDate}"
-                           placeholder="ublication Date"/> <span class="help-block">Publication
+                    <input type="text" class="form-control" id="publicationDate"
+                           name="publicationDate" placeholder="DD/MM/YYYY" th:value="${book.publicationDate}"/>
+                    <span class="help-block">Publication
 								Date of the book</span>
                 </div>
             </div>
@@ -71,27 +70,13 @@
                 <label class="col-md-2 control-label" for="category">*
                     Category</label>
                 <div class="col-md-8">
-                    <select th:value="${book.category}" id="category" name="category"
-                            class="form-control">
-                        <option value="" selected="selected" disabled="disabled">Please
-                            select an option...
-                        </option>
-                        <option value="Management"
-                                th:selected="(${book.category}=='Management')">Management
-                        </option>
-                        <option value="Fiction"
-                                th:selected="(${book.category}=='Fiction')">Fiction
-                        </option>
-                        <option value="Engineering"
-                                th:selected="(${book.category}=='Engineering')">Engineering
-                        </option>
-                        <option value="Programming"
-                                th:selected="(${book.category}=='Programming')">Programming
-                        </option>
-                        <option value="Arts &amp; Literature"
-                                th:selected="(${book.category}=='Arts &amp; Literature')">Arts
-                            &amp; Literature
-                        </option>
+                    <select name="category" th:field="${book.category}"
+                            id="category" class="form-control"
+                            style="width: 100%; color: black;">
+                        <!--/*@thymesVar id="Char" type="java.lang.Character"*/-->
+                        <option th:each="category : ${categories}"
+                                th:value="${category.getCategoryId()}"
+                                th:text="${category.getCategoryName()}"></option>
                     </select>
                 </div>
             </div>
@@ -143,26 +128,30 @@
             </div>
             <!-- list price -->
             <div class="form-group">
-                <label class="col-md-2 control-label" for="listPrice">List
+                <label class="col-md-2 control-label" for="originalPrice">Original
                     Price</label>
                 <div class="col-md-8">
                     <div class="input-group">
                         <span class="input-group-addon">$</span> <input
-                            th:value="${book.listPrice}" type="number" name="listPrice"
-                            class="form-control" id="listPrice" placeholder="List Price"/>
+                            th:value="${book.getOriginalPrice().doubleValue()}" type="number" name="originalPrice"
+                            class="form-control" id="originalPrice" placeholder="Original Price"/>
                     </div>
-                    <span class="help-block">List price of the book</span>
+                    <span class="help-block">Original price</span>
                 </div>
             </div>
             <!-- our price -->
             <div class="form-group">
-                <label class="col-md-2 control-label" for="ourPrice">Our
-                    Price</label>
+                <label class="col-md-2 control-label" for="offer">Include Offer</label>
                 <div class="col-md-8">
+                    <label><input value="true" type="radio" name="active"
+                                  checked="checked"/> Active </label> <label><input
+                        value="false" type="radio" name="active"/> Inactive </label> <span
+                        class="help-block">Whether the book is active or inactive</span>
+
                     <div class="input-group">
                         <span class="input-group-addon">$</span> <input
-                            th:value="${book.ourPrice}" type="number" name="ourPrice"
-                            class="form-control" id="ourPrice" placeholder="Our Price"/>
+                            th:value="${book.getOffer().doubleValue()}" type="number" name="offer"
+                            class="form-control" id="offer" placeholder="Offer"/>
                     </div>
                     <span class="help-block">Our price of the book</span>
                 </div>
@@ -200,12 +189,9 @@
             </div>
             <!-- upload image -->
             <div class="form-group">
-                <div class="col-md-2">
-                    <label for="bookImage">Upload book image</label>
-                </div>
+                <label class="col-md-2 control-label" for="bookImages">Upload book image</label>
                 <div class="col-md-8">
-                    <input id="bookImage" type="file" name="bookImage"
-                           th:value="${book.bookImage}"/>
+                    <input id="bookImages" type="file" name="image" accept="image/*"/>
                 </div>
             </div>
             <div class="form-group">
@@ -219,4 +205,14 @@
     </form>
 </div>
 </body>
+<script type="text/javascript" th:inline="javascript">
+    $('#category').select2();
+    var dateToday = new Date();
+    $(
+        "#publicationDate")
+        .datepicker({
+            minDate : dateToday,
+            dateFormat : "d/m/yy"
+        });
+</script>
 </html>

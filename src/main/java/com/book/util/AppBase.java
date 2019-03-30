@@ -3,6 +3,7 @@ package com.book.util;
 import com.book.config.security.permission.AclCheck;
 import com.book.config.security.permission.AclException;
 import com.book.config.security.permission.Permission;
+import com.book.entity.DomainBase;
 import com.book.entity.User;
 import com.book.entity.UserPermission;
 import com.book.repository.UserService;
@@ -14,6 +15,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public abstract class AppBase {
+    public static User LOGGED_IN_USER;
+    public static String FILE_STORAGE_BASE_DIR = "C:\\temp\\";
     private Object object;
     @Autowired
     HttpSession httpSession;
@@ -50,5 +53,5 @@ public abstract class AppBase {
                 throw new AclException("Not Permitted!");
             }
         }
-    };
+    }
 }

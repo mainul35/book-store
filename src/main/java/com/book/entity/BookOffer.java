@@ -1,22 +1,16 @@
 package com.book.entity;
 
-import com.book.config.security.permission.Permission;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_permissions")
-public class UserPermission extends DomainBase implements Serializable {
+public class BookOffer extends DomainBase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    @Column
-    String username;
-    @Column
-    Permission permission;
-
+    Book book;
+    Offer offer;
+    boolean isAvailable;
     @Column
     private String createdBy;
     @Column
@@ -25,35 +19,6 @@ public class UserPermission extends DomainBase implements Serializable {
     private Date createdOn;
     @Column
     private Date updatedOn;
-
-    public UserPermission() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Permission getPermission() {
-        return permission;
-    }
-
-    public void setPermission(Permission permission) {
-        this.permission = permission;
-    }
-
-    @Column
     @Override
     public String getCreatedBy() {
         return this.createdBy;
@@ -71,7 +36,7 @@ public class UserPermission extends DomainBase implements Serializable {
 
     @Override
     public void setUpdatedBy(String updatedBy) {
-        this.createdBy = updatedBy;
+        this.updatedBy = updatedBy;
     }
 
     @Override
@@ -92,5 +57,37 @@ public class UserPermission extends DomainBase implements Serializable {
     @Override
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 }

@@ -2,19 +2,20 @@ package com.book.controller;
 import com.book.config.security.permission.AclCheck;
 import com.book.config.security.permission.AclException;
 import com.book.config.security.permission.Permission;
+import com.book.entity.DomainBase;
 import com.book.impl.UserSecurityService;
 import com.book.repository.UserService;
-import com.book.util.AppBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController extends AppBase {
+public class AdminController extends ControllerBase {
 
 	@Autowired
 	UserService userService;
@@ -35,7 +36,35 @@ public class AdminController extends AppBase {
 	@AclCheck(permissionNames = {Permission.ADMIN_ONLY})
 	@RequestMapping("/dashboard")
 	public String logIn() throws AclException {
+	    if (LOGGED_IN_USER == null) {
+	        return "redirect:/admin/login";
+        }
         super.doAclCheck("logIn");
 		return "admin/dashboard";
 	}
+
+    @Override
+    public List<DomainBase> getAll() {
+        return null;
+    }
+
+    @Override
+    public void Save(DomainBase object) {
+
+    }
+
+    @Override
+    public DomainBase getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public DomainBase update(DomainBase object) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
 }

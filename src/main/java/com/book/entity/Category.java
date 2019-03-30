@@ -1,21 +1,16 @@
 package com.book.entity;
 
-import com.book.config.security.permission.Permission;
-
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_permissions")
-public class UserPermission extends DomainBase implements Serializable {
+public class Category extends DomainBase{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    Long categoryId;
     @Column
-    String username;
-    @Column
-    Permission permission;
+    String categoryName;
 
     @Column
     private String createdBy;
@@ -26,34 +21,22 @@ public class UserPermission extends DomainBase implements Serializable {
     @Column
     private Date updatedOn;
 
-    public UserPermission() {
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public Long getId() {
-        return id;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public String getUsername() {
-        return username;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Permission getPermission() {
-        return permission;
-    }
-
-    public void setPermission(Permission permission) {
-        this.permission = permission;
-    }
-
-    @Column
     @Override
     public String getCreatedBy() {
         return this.createdBy;
@@ -71,7 +54,7 @@ public class UserPermission extends DomainBase implements Serializable {
 
     @Override
     public void setUpdatedBy(String updatedBy) {
-        this.createdBy = updatedBy;
+        this.updatedBy = updatedBy;
     }
 
     @Override

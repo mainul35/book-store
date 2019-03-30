@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.book.config.security.permission.AclCheck;
 import com.book.config.security.permission.Permission;
+import com.book.entity.DomainBase;
 import com.book.entity.Role;
 import com.book.service.RoleService;
 import com.book.util.AppBase;
@@ -29,7 +30,7 @@ import com.book.impl.UserSecurityService;
 import com.book.repository.UserService;
 
 @Controller
-public class HomeController extends AppBase {
+public class HomeController extends ControllerBase {
 	@Autowired
 	private JavaMailSender mailSender;
 	@Autowired
@@ -69,8 +70,14 @@ public class HomeController extends AppBase {
 
 	@RequestMapping("/logout")
 	public String logout () {
-		System.out.println("rendering dashboard page...");
-		return "index";
+	    SecurityContextHolder.getContext().setAuthentication(null);
+	    if (LOGGED_IN_USER.getRole().getName().equals("ROLE_ADMIN")) {
+            LOGGED_IN_USER = null;
+            return "redirect:/admin/login";
+        } else {
+            LOGGED_IN_USER = null;
+            return "redirect:/";
+        }
 	}
 
 	@RequestMapping("/forgetPassword")
@@ -180,4 +187,29 @@ public class HomeController extends AppBase {
 		model.addAttribute("classActiveEdit", true);
 		return "myProfile";
 	}}
+
+    @Override
+    public List<DomainBase> getAll() {
+        return null;
+    }
+
+    @Override
+    public void Save(DomainBase object) {
+
+    }
+
+    @Override
+    public DomainBase getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public DomainBase update(DomainBase object) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
 }

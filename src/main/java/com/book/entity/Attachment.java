@@ -1,21 +1,16 @@
 package com.book.entity;
 
-import com.book.config.security.permission.Permission;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_permissions")
-public class UserPermission extends DomainBase implements Serializable {
+public class Attachment extends DomainBase {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    @Column
-    String username;
-    @Column
-    Permission permission;
+    @Column(name="id", length = 20, nullable = false)
+    private Long id;
+    String displayName;
+    String path;
+    String type;
 
     @Column
     private String createdBy;
@@ -26,7 +21,8 @@ public class UserPermission extends DomainBase implements Serializable {
     @Column
     private Date updatedOn;
 
-    public UserPermission() {
+    public Attachment() {
+        this.id = System.currentTimeMillis();
     }
 
     public Long getId() {
@@ -37,23 +33,22 @@ public class UserPermission extends DomainBase implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    public Permission getPermission() {
-        return permission;
+    public String getPath() {
+        return path;
     }
 
-    public void setPermission(Permission permission) {
-        this.permission = permission;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    @Column
     @Override
     public String getCreatedBy() {
         return this.createdBy;
@@ -92,5 +87,13 @@ public class UserPermission extends DomainBase implements Serializable {
     @Override
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
