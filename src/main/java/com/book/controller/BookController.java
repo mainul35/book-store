@@ -45,6 +45,9 @@ public class BookController extends ControllerBase {
 	@RequestMapping(value = "/addBook", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.ADD_BOOK})
     public String addBook(Model model) throws AclException {
+        if (LOGGED_IN_USER == null) {
+            return "redirect:/admin/login";
+        }
         doAclCheck("addBook", Model.class);
 		Book book = new Book();
 		model.addAttribute("book", book);
@@ -56,6 +59,9 @@ public class BookController extends ControllerBase {
     @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.ADD_BOOK})
 	@RequestMapping(value = "/addBook", method = RequestMethod.POST)
 	public String addBookPost(@ModelAttribute("book") Book book, HttpServletRequest httpServletRequest, @RequestParam(name = "image") MultipartFile file) throws AclException {
+        if (LOGGED_IN_USER == null) {
+            return "redirect:/admin/login";
+        }
         doAclCheck("addBookPost", Book.class, HttpServletRequest.class, MultipartFile.class);
         Attachment attachment = new Attachment();
         attachment = attachmentService.save(attachment, file, book.getId());
@@ -68,6 +74,9 @@ public class BookController extends ControllerBase {
     @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.VIEW_BOOKS})
 	@RequestMapping(value = "/bookList", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String bookList(Model model) throws AclException {
+        if (LOGGED_IN_USER == null) {
+            return "redirect:/admin/login";
+        }
         doAclCheck("bookList", Model.class);
         List<Book> bookList = bookService.findAll();
 		model.addAttribute("bookList" , bookList);

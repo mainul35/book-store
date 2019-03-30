@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.book.config.security.permission.AclCheck;
+import com.book.config.security.permission.AclException;
 import com.book.config.security.permission.Permission;
 import com.book.entity.DomainBase;
 import com.book.entity.Role;
@@ -63,6 +64,9 @@ public class HomeController extends ControllerBase {
     @RequestMapping("/home")
     @AclCheck(permissionNames = {Permission.VIEW_BOOKS})
     public String login(Model model) throws Exception {
+        if (LOGGED_IN_USER == null) {
+            return "redirect:/";
+        }
         super.doAclCheck("login", Model.class);
         model.addAttribute("classActiveLogin", true);
         return "myAccount";
