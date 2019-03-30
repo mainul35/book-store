@@ -1,13 +1,14 @@
 package com.book.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 public class Offer extends DomainBase{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long offerId;
     private String offerName;
     private boolean isAvailable;

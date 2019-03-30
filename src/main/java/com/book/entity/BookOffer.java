@@ -8,8 +8,11 @@ public class BookOffer extends DomainBase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    Book book;
-    Offer offer;
+    @Column
+    Long bookId;
+    @Column
+    Long offerId;
+    @Column
     boolean isAvailable;
     @Column
     private String createdBy;
@@ -67,20 +70,20 @@ public class BookOffer extends DomainBase {
         this.id = id;
     }
 
-    public Book getBook() {
-        return book;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
-    public Offer getOffer() {
-        return offer;
+    public Long getOfferId() {
+        return offerId;
     }
 
-    public void setOffer(Offer offer) {
-        this.offer = offer;
+    public void setOfferId(Long offerId) {
+        this.offerId = offerId;
     }
 
     public boolean isAvailable() {
