@@ -12,7 +12,7 @@
                 <th>Author</th>
                 <th>Category</th>
                 <th>List Price</th>
-                <th>Our Price</th>
+                <th>Discount</th>
                 <th>Active?</th>
                 <th>Operation</th>
             </tr>
@@ -22,16 +22,18 @@
                 <tr>
                     <!-- <td><input hidden="hidden" name="id" th:value="${book.id}" /></td> -->
                     <td th:text="${book.title}"></td>
-                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.authors}"></td>
                     <td th:text="${book.category}"></td>
-                    <td th:text="${book.listPrice}"></td>
-                    <td th:text="${book.ourPrice}"></td>
+                    <td th:text="${book.getOriginalPrice().doubleValue()}"></td>
+                    <td th:text="${book.getOffer().doubleValue()}"></td>
                     <td th:text="${book.active}"></td>
                     <td>delete</td>
                 </tr>
             </th:block>
             </tbody>
         </table>
+        <h1 th:text="${createdBy}"></h1>
+        <h1 th:text="${createdOn}"></h1>
     </div>
 </div>
 </body>

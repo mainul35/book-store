@@ -1,7 +1,5 @@
 package com.book.entity;
 
-import com.book.config.security.permission.Permission;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +8,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class User implements UserDetails, Serializable {
+public class User extends DomainBase implements UserDetails, Serializable {
 
     /**
      *
@@ -33,6 +31,18 @@ public class User implements UserDetails, Serializable {
     private boolean enabled = true;
     @ManyToOne
     Role role;
+
+    @OneToOne
+    private Attachment photo;
+
+    @Column
+    private String createdBy;
+    @Column
+    private String updatedBy;
+    @Column
+    private Date createdOn;
+    @Column
+    private Date updatedOn;
 
     public User () {
     }
@@ -131,4 +141,52 @@ public class User implements UserDetails, Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+    public Attachment getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Attachment photo) {
+        this.photo = photo;
+    }
+
+    @Override
+    public String getCreatedBy() {
+        return this.createdBy;
+    }
+
+    @Override
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @Override
+    public String getUpdatedBy() {
+        return this.updatedBy;
+    }
+
+    @Override
+    public void setUpdatedBy(String updatedBy) {
+        this.createdBy = updatedBy;
+    }
+
+    @Override
+    public Date getCreatedOn() {
+        return this.createdOn;
+    }
+
+    @Override
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    @Override
+    public Date getUpdatedOn() {
+        return this.updatedOn;
+    }
+
+    @Override
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
 }

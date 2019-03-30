@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/",
             "/app/**",
 			"/admin/login",
+			"/admin/dashboard",
 			"/my-account",
 			"/newUser",
 			"/forgetPassword",
@@ -49,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
-			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/admin/book/**").hasRole("ADMIN")
 			.anyRequest().authenticated()
 //		.and()
 //			.formLogin()
