@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+>
+<head>
+</head>
+<body>
+<div class="row">
+    <form class="form-horizontal" submit-to="/admin/category/addCategory"
+          method="post" enctype="multipart/form-data" th:object="${category}">
+        <fieldset>
+            <legend class="center-block">
+               Category Creation<span style="font-size: small"> * is a
+							required field</span>
+            </legend>
+            <!-- title -->
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="categoryName">* Category Name</label>
+
+                <div class="col-md-8">
+                    <input type="text" name="categoryName" class="form-control" id="categoryName"
+                           th:value="${category.categoryName}" required="required" placeholder="Category Name"/>
+                    <span class="help-block">Category Name</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <button type="submit" class="btn btn-success">Add Category</button>
+                    <a class="btn btn-danger" th:href="@{/}">Cancel</a>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    $('#category').select2();
+    var dateToday = new Date();
+    $(
+        "#publicationDate")
+        .datepicker({
+            minDate: dateToday,
+            dateFormat: "d/m/yy"
+        });
+</script>
+</html>

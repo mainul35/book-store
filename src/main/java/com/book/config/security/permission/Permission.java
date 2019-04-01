@@ -7,5 +7,7 @@ public enum Permission {
     EDIT_BOOK,
     DELETE_BOOK,
     ADMIN_ONLY,
-    USER_ONLY
+    USER_ONLY,
+    ADD_CATEGORY,
+    VIEW_CATEGORY
 }
