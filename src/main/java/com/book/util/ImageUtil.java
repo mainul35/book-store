@@ -79,6 +79,7 @@ public class ImageUtil {
             }
         }
     }
+
     public byte[] readImage(Attachment attachment, int size) throws IOException {
         InputStream in = null;
         String filePath = "";
@@ -97,6 +98,4 @@ public class ImageUtil {
         }
         return IOUtils.toByteArray(in);
     }
-
-
 }
