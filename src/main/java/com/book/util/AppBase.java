@@ -15,7 +15,6 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public abstract class AppBase {
-    public static User LOGGED_IN_USER;
     public static String FILE_STORAGE_BASE_DIR = "C:\\temp\\";
     private Object object;
     @Autowired
@@ -53,5 +52,13 @@ public abstract class AppBase {
                 throw new AclException("Not Permitted!");
             }
         }
+    }
+
+    public User loggedInUser (){
+        return (User) httpSession.getAttribute("user");
+    }
+
+    public void setLoggedInUser (User user){
+        httpSession.setAttribute("user", user);
     }
 }

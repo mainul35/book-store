@@ -36,7 +36,7 @@ public class AdminController extends ControllerBase {
 	@AclCheck(permissionNames = {Permission.ADMIN_ONLY})
 	@RequestMapping("/dashboard")
 	public String logIn() throws AclException {
-	    if (LOGGED_IN_USER == null) {
+	    if (loggedInUser() == null) {
 	        return "redirect:/admin/login";
         }
         super.doAclCheck("logIn");
