@@ -28,8 +28,9 @@ public class Book extends DomainBase{
     private boolean isUsed;
     private BigDecimal usedPrice = new BigDecimal(0);
 
-    //@OneToOne
-    //private Offer currentOffer = new Offer();
+
+//    @OneToOne
+//    private Offer currentOffer = new Offer();
 
     private boolean active=true;
 	
@@ -230,6 +231,7 @@ public class Book extends DomainBase{
     }
 
 
+
     public Attachment getPhoto() {
         return photo;
     }
@@ -238,10 +240,11 @@ public class Book extends DomainBase{
         this.photo = photo;
     }
 
-    /*public Offer getCurrentOffer() {
-        return currentOffer;
-    }*/
 
+//    public Offer getCurrentOffer() {
+//        return currentOffer;
+//    }
+//
 //    public void setCurrentOffer(Offer currentOffer) {
 //        this.currentOffer = currentOffer;
 //    }

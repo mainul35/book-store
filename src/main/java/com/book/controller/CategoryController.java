@@ -1,11 +1,15 @@
 package com.book.controller;
 
+
 import com.book.config.security.permission.AclCheck;
 import com.book.config.security.permission.AclException;
 import com.book.config.security.permission.Permission;
-import com.book.entity.*;
+import com.book.entity.Category;
+import com.book.entity.DomainBase;
+import com.book.entity.User;
 import com.book.impl.UserServiceImpl;
 import com.book.service.CategoryService;
+import com.book.util.AppBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -13,7 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import java.util.List;
+
+import static com.book.config.security.permission.Permission.*;
 
 @Controller
 @RequestMapping("/admin/category")
@@ -31,7 +38,7 @@ public class CategoryController extends ControllerBase {
 
 
     @RequestMapping(value = "/addCategory", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.ADD_CATEGORY})
+    @AclCheck(permissionNames = {ADMIN_ONLY, ADD_CATEGORY})
     public String addCategory(Model model) throws AclException {
         if (LOGGED_IN_USER == null) {
             return "redirect:/admin/login";
@@ -42,7 +49,7 @@ public class CategoryController extends ControllerBase {
         return "admin/addCategory";
     }
 
-    @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.ADD_CATEGORY})
+    @AclCheck(permissionNames = {ADMIN_ONLY, ADD_CATEGORY})
     @RequestMapping(value = "/addCategory", method = RequestMethod.POST)
     public String addCategoryPost(@ModelAttribute("category") Category category) throws AclException {
         if (LOGGED_IN_USER == null) {
@@ -55,7 +62,7 @@ public class CategoryController extends ControllerBase {
         return "redirect:/admin/category/categoryList";
     }
 
-    @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.VIEW_CATEGORY})
+    @AclCheck(permissionNames = {ADMIN_ONLY, VIEW_CATEGORY})
     @RequestMapping(value = "/categoryList", produces = MediaType.APPLICATION_JSON_VALUE)
     public String categoryList(Model model) throws AclException {
         if (LOGGED_IN_USER == null) {
