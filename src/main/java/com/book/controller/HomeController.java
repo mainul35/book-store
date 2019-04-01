@@ -64,7 +64,7 @@ public class HomeController extends ControllerBase {
     @RequestMapping("/home")
     @AclCheck(permissionNames = {Permission.VIEW_BOOKS})
     public String login(Model model) throws Exception {
-        if (LOGGED_IN_USER == null) {
+        if (loggedInUser() == null) {
             return "redirect:/";
         }
         super.doAclCheck("login", Model.class);
@@ -73,13 +73,13 @@ public class HomeController extends ControllerBase {
     }
 
 	@RequestMapping("/logout")
-	public String logout () {
+	public String logout (HttpSession session) {
 	    SecurityContextHolder.getContext().setAuthentication(null);
-	    if (LOGGED_IN_USER.getRole().getName().equals("ROLE_ADMIN")) {
-            LOGGED_IN_USER = null;
+	    if (loggedInUser().getRole().getName().equals("ROLE_ADMIN")) {
+            session.setAttribute("user", null);
             return "redirect:/admin/login";
         } else {
-            LOGGED_IN_USER = null;
+            session.setAttribute("user", null);
             return "redirect:/";
         }
 	}

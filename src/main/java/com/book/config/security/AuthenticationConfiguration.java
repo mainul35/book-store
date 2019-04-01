@@ -3,6 +3,7 @@ package com.book.config.security;
 import com.book.entity.Role;
 import com.book.entity.User;
 import com.book.util.AppBase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,33 +22,30 @@ import java.util.Collection;
 
 @Service
 public class AuthenticationConfiguration extends AppBase implements Authentication {
-
+    @Autowired
+    private HttpSession httpSession;
     private boolean authenticated;
 
     public AuthenticationConfiguration(){}
 
-    public AuthenticationConfiguration(User user) {
-        LOGGED_IN_USER = user;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return LOGGED_IN_USER == null ? null : LOGGED_IN_USER.getAuthorities();
+        return loggedInUser() == null ? null : loggedInUser().getAuthorities();
     }
 
     @Override
     public Object getCredentials() {
-        return LOGGED_IN_USER == null ? null : LOGGED_IN_USER.getPassword();
+        return loggedInUser() == null ? null : loggedInUser().getPassword();
     }
 
     @Override
     public Object getDetails() {
-        return LOGGED_IN_USER;
+        return loggedInUser();
     }
 
     @Override
     public Object getPrincipal() {
-        return LOGGED_IN_USER == null ? null : LOGGED_IN_USER.getUsername();
+        return loggedInUser() == null ? null : loggedInUser().getUsername();
     }
 
     @Override
@@ -62,6 +60,6 @@ public class AuthenticationConfiguration extends AppBase implements Authenticati
 
     @Override
     public String getName() {
-        return LOGGED_IN_USER == null ? null : LOGGED_IN_USER.getUsername();
+        return loggedInUser() == null ? null : loggedInUser().getUsername();
     }
 }

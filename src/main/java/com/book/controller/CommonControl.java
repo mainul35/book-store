@@ -36,16 +36,20 @@ public class CommonControl extends ControllerBase {
         User user = userService.findByUsername(params.get("username")[0].toString());
         if (user != null) {
             if (passwordEncoder.matches(params.get("password")[0], user.getPassword())) {
-                SecurityContextHolder.getContext().setAuthentication(new AuthenticationConfiguration(user));
+                SecurityContextHolder.getContext().setAuthentication(new AuthenticationConfiguration());
                 SecurityContextHolder.getContext().getAuthentication().setAuthenticated(true);
                 if (params.get("req-origin")[0].equals(user.getRole().getName() + "_" + requestAuthorizer)) {
-                    LOGGED_IN_USER = user;
                     model.addAttribute("classActiveLogin", true);
+                    setLoggedInUser(user);
                     response.sendRedirect("/"+params.get("mapping")[0].concat("/dashboard"));
                 } else {
                     response.sendRedirect("403");
                 }
+            } else {
+                response.sendRedirect("/");
             }
+        } else {
+            response.sendRedirect("/");
         }
     }
 

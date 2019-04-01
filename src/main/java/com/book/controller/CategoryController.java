@@ -40,7 +40,7 @@ public class CategoryController extends ControllerBase {
     @RequestMapping(value = "/addCategory", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @AclCheck(permissionNames = {ADMIN_ONLY, ADD_CATEGORY})
     public String addCategory(Model model) throws AclException {
-        if (LOGGED_IN_USER == null) {
+        if (loggedInUser() == null) {
             return "redirect:/admin/login";
         }
         doAclCheck("addCategory", Model.class);
@@ -52,7 +52,7 @@ public class CategoryController extends ControllerBase {
     @AclCheck(permissionNames = {ADMIN_ONLY, ADD_CATEGORY})
     @RequestMapping(value = "/addCategory", method = RequestMethod.POST)
     public String addCategoryPost(@ModelAttribute("category") Category category) throws AclException {
-        if (LOGGED_IN_USER == null) {
+        if (loggedInUser() == null) {
             return "redirect:/admin/login";
         }
         doAclCheck("addCategoryPost", Category.class);
@@ -65,7 +65,7 @@ public class CategoryController extends ControllerBase {
     @AclCheck(permissionNames = {ADMIN_ONLY, VIEW_CATEGORY})
     @RequestMapping(value = "/categoryList", produces = MediaType.APPLICATION_JSON_VALUE)
     public String categoryList(Model model) throws AclException {
-        if (LOGGED_IN_USER == null) {
+        if (loggedInUser() == null) {
             return "redirect:/admin/login";
         }
         doAclCheck("categoryList", Model.class);
