@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
+@Table(name = "tbl_user")
 public class User extends DomainBase implements UserDetails, Serializable {
 
     /**
