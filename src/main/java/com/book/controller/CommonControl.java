@@ -46,10 +46,18 @@ public class CommonControl extends ControllerBase {
                     response.sendRedirect("403");
                 }
             } else {
-                response.sendRedirect("/");
+                if (params.get("req-origin")[0].equals(user.getRole().getName() + "_" + requestAuthorizer)) {
+                    response.sendRedirect("/"+params.get("mapping")[0].concat("/login"));
+                } else {
+                    response.sendRedirect("/");
+                }
             }
         } else {
-            response.sendRedirect("/");
+            if (!(params.get("mapping")[0].equals("user"))) {
+                response.sendRedirect("/"+params.get("mapping")[0].concat("/login"));
+            } else {
+                response.sendRedirect("/");
+            }
         }
     }
 
