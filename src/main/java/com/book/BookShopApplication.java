@@ -18,6 +18,7 @@ import com.book.impl.SecurityUtility;
 import com.book.repository.UserService;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @ComponentScan(basePackages = {
@@ -43,6 +44,8 @@ public class BookShopApplication implements CommandLineRunner{
     CategoryService categoryService;
 	@Autowired
     ServletContext servletContext;
+	@Autowired
+    HttpSession httpSession;
 
     public static void main(String[] args) {
 		SpringApplication.run(BookShopApplication.class, args);
@@ -53,6 +56,7 @@ public class BookShopApplication implements CommandLineRunner{
 //        initializer();
         AppBase.FILE_STORAGE_BASE_DIR = servletContext.getRealPath("\\") + "\\temp";
         FileUtil.makeDirectory(AppBase.FILE_STORAGE_BASE_DIR);
+        AppBase.httpSession = httpSession;
 
 
         System.out.println("============ Application is ready ===============");
