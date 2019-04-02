@@ -17,8 +17,7 @@ import java.util.List;
 public abstract class AppBase {
     public static String FILE_STORAGE_BASE_DIR = "C:\\temp\\";
     private Object object;
-    @Autowired
-    HttpSession httpSession;
+    public static HttpSession httpSession;
     @Autowired
     UserService userService;
     @Autowired
