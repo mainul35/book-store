@@ -6,7 +6,7 @@
  *
  * */
 
-var validator = function (form) {
+var appValidator = function (form) {
     return function () {
         form.querySelector(".validate").addEventListener("focusout", function (e) {
             var input = this;

@@ -45,6 +45,7 @@
 <link href="/admin/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
 <!-- Bootstrap datepicker -->
 <link rel="stylesheet" href="/css/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"/>
+<link rel="stylesheet" href="/app/src/application.css"/>
 <link th:href="@{/css/lib/multiple-select/select2.css}"
           type="text/css" rel="stylesheet" />
 </head>
@@ -111,7 +112,7 @@
 						<li class="active"><a class="" th:href="@{/admin/dashboard}"> <i
 								class="icon_house_alt"></i> <span>Dashboard</span>
 						</a></li>
-						<li class="sub-menu"><a href="javascript:;" class=""> <i
+						<li class="sub-menu"><a class=""> <i
 								class="icon_document_alt"></i> <span>Books</span> <span
 								class="menu-arrow arrow_carrot-right"></span>
 						</a>
@@ -119,7 +120,7 @@
 								<li><a onmouseout="this.style.cursor='default'" onmouseover="this.style.cursor='pointer'" class="" path="/admin/book/addBook">Add Books</a></li>
 								<li><a onmouseout="this.style.cursor='default'" onmouseover="this.style.cursor='pointer'" class="" path="/admin/book/bookList">All Books</a></li>
 							</ul></li>
-						<li class="sub-menu"><a href="javascript:;" class=""> <i
+						<li class="sub-menu"><a class=""> <i
 								class="icon_document_alt"></i> <span>Category</span> <span
 								class="menu-arrow arrow_carrot-right"></span>
 						</a>
@@ -127,7 +128,7 @@
 								<li><a onmouseout="this.style.cursor='default'" onmouseover="this.style.cursor='pointer'" class="" path="/admin/category/addCategory">Add Category</a></li>
 								<li><a onmouseout="this.style.cursor='default'" onmouseover="this.style.cursor='pointer'" class="" path="/admin/category/categoryList">All Category</a></li>
 							</ul></li>
-						<li class="sub-menu"><a href="javascript:;" class=""> <i
+						<li class="sub-menu"><a class=""> <i
 								class="icon_desktop"></i> <span>UI Fitures</span> <span
 								class="menu-arrow arrow_carrot-right"></span>
 						</a>
@@ -142,7 +143,7 @@
 
 						</a></li>
 
-						<li class="sub-menu"><a href="javascript:;" class=""> <i
+						<li class="sub-menu"><a class=""> <i
 								class="icon_table"></i> <span>Tables</span> <span
 								class="menu-arrow arrow_carrot-right"></span>
 						</a>
@@ -216,8 +217,11 @@
         <script type="text/javascript"
                 th:src="@{/css/lib/multiple-select/select2.js}"></script>
         <script src="/css/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-        <script src="/app/App.js"></script>
-		<script src="/app/requestManager.js"></script>
+        <script src="/app/lib/app.js"></script>
+		<script src="/app/lib/app.forms.js"></script>
+		<script src="/app/lib/app.requestManager.js"></script>
+		<script src="/app/lib/app.validator.js"></script>
+		<script src="/app/src/application.js"></script>
 		<script>
 			//knob
 			$(function() {

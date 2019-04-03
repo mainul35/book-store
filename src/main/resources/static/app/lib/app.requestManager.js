@@ -1,4 +1,5 @@
-App.requestManager = (function () {
+App.RequestManager = (function () {
+    var contentPane = $( ".content-pane" );
     return {
         handleRouting: function () {
             var routes = document.getElementsByTagName("a")
@@ -6,16 +7,22 @@ App.requestManager = (function () {
                 console.log(routes[i].getAttribute("path"))
                 routes[i].onclick = function () {
                     let path = this.getAttribute('path')
-                    $.get( path, function( data ) {
-                        $( ".content-pane" ).html( data );
-                    });
+                    if (path !== null) {
+                        App.RequestManager.loader.addLoading(contentPane);
+                        $.get( path, function( data ) {
+                            contentPane.html( data );
+                        }).fail(function(data) {
+                            contentPane.html( "<p>Failed to process your request.</p>" );
+                        });
+                        App.RequestManager.loader.removeLoading(contentPane);
+                    }
                 }
             }
         },
         submitForm: function (form, callback, headers = {}) {
             var url = form.getAttribute('action')
-            var data = Fusion.forms.serialize(form);
-            console.log(Fusion.forms.serialize(form))
+            var data = App.Forms.serialize(form);
+            console.log(App.Forms.serialize(form))
             fetch(url, {
                 method: 'POST', // or 'PUT'
                 body: data, // data can be `string` or {object}!
@@ -29,5 +36,16 @@ App.requestManager = (function () {
                     console.error('Error:', error)
                 });
         },
+
+        loader: {
+            addLoading: function (panel) {
+                var loading = "<div class='loader'></div>";
+                panel.append(loading);
+            },
+
+            removeLoading: function (panel) {
+                panel.querySelector('.loader').remove();
+            }
+        }
     }
-}())
+}());
