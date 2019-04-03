@@ -4,12 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.book.config.security.permission.AclCheck;
-import com.book.config.security.permission.AclException;
 import com.book.config.security.permission.Permission;
 import com.book.entity.DomainBase;
 import com.book.entity.Role;
 import com.book.service.RoleService;
-import com.book.util.AppBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -52,16 +50,16 @@ public class HomeController extends ControllerBase {
 		return "index";
 	}
 
-	@RequestMapping("/my-account")
+	@RequestMapping("/login")
 	public String myAccount(Model model, HttpSession session) {
         String requestAuthorizer = "" + System.currentTimeMillis();
 	    model.addAttribute("classActiveLogin", true);
 		model.addAttribute("origin", "ROLE_USER_"+requestAuthorizer);
         session.setAttribute("requestAuthorizer", requestAuthorizer);
-		return "myAccount";
+		return "login";
 	}
 
-    @RequestMapping("/home")
+    @RequestMapping("/user/dashboard")
     @AclCheck(permissionNames = {Permission.VIEW_BOOKS})
     public String login(Model model) throws Exception {
         if (loggedInUser() == null) {
@@ -69,7 +67,7 @@ public class HomeController extends ControllerBase {
         }
         super.doAclCheck("login", Model.class);
         model.addAttribute("classActiveLogin", true);
-        return "myAccount";
+        return "login";
     }
 
 	@RequestMapping("/logout")
@@ -93,7 +91,7 @@ public class HomeController extends ControllerBase {
 
 		if (user == null) {
 			model.addAttribute("emailNotExist", true);
-			return "myAccount";
+			return "login";
 		}
 
 		String password = SecurityUtility.randomPassword();
@@ -115,7 +113,7 @@ public class HomeController extends ControllerBase {
 
 		model.addAttribute("emailSent", "true");
 
-		return "myAccount";
+		return "login";
 	}
 
 	@RequestMapping(value = "/newUser", method = RequestMethod.POST)
@@ -128,13 +126,13 @@ public class HomeController extends ControllerBase {
 		if (userService.findByUsername(username) != null) {
 			model.addAttribute("usernameExists", true);
 
-			return "myAccount";
+			return "login";
 		}
 
 		if (userService.findByEmail(userEmail) != null) {
 			model.addAttribute("emailExists", true);
 
-			return "myAccount";
+			return "login";
 		}
 
 		User user = new User();
@@ -162,7 +160,7 @@ public class HomeController extends ControllerBase {
 
 		model.addAttribute("emailSent", "true");
 
-		return "myAccount";
+		return "login";
 	}
 
 	@RequestMapping("/newUser")
