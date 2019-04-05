@@ -5,6 +5,7 @@ application = (function () {
             if (document.querySelector("requestPath") !== null) {
                 var path = document.querySelector("requestPath").getAttribute("path");
                 if (path) {
+                    App.RequestManager.loader.addLoading(document.querySelector(".content-pane"));
                     App.RequestManager.loadContent(document.querySelector("body"), path, function (container, data) {
                         var contentPane = container.querySelector(".content-pane")
                         contentPane.innerHTML = data
