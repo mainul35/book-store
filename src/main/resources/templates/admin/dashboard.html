@@ -10,7 +10,9 @@
 	<div th:replace="common/header_admin :: navbar"></div>
 	<div class="container">
 		<div class="content-pane">
-
+			<th:if th:test="${requestPath != null}">
+                <requestPath th:path="${requestPath}"/>
+			</th:if>
 		</div>
 	</div>
 	<div th:replace="common/header_admin:: body-bottom-scripts"></div>
