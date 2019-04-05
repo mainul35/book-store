@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static com.book.config.security.permission.Permission.*;
@@ -39,13 +40,17 @@ public class CategoryController extends ControllerBase {
 
     @RequestMapping(value = "/addCategory", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @AclCheck(permissionNames = {ADMIN_ONLY, ADD_CATEGORY})
-    public String addCategory(Model model) throws AclException {
+    public String addCategory(Model model, HttpServletRequest request) throws AclException {
         if (loggedInUser() == null) {
             return "redirect:/admin/login";
         }
-        doAclCheck("addCategory", Model.class);
+        doAclCheck("addCategory", Model.class, HttpServletRequest.class);
         Category category= new Category();
         model.addAttribute("category", category);
+        if (request.getHeader("x-requested-with") == null) {
+            model.addAttribute("requestPath", "/admin/category/addCategory");
+            return "admin/dashboard";
+        }
         return "admin/addCategory";
     }
 
@@ -64,16 +69,20 @@ public class CategoryController extends ControllerBase {
 
     @AclCheck(permissionNames = {ADMIN_ONLY, VIEW_CATEGORY})
     @RequestMapping(value = "/categoryList", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String categoryList(Model model) throws AclException {
+    public String categoryList(Model model, HttpServletRequest request) throws AclException {
         if (loggedInUser() == null) {
             return "redirect:/admin/login";
         }
-        doAclCheck("categoryList", Model.class);
+        doAclCheck("categoryList", Model.class, HttpServletRequest.class);
         List<Category> categoryList= categoryService.getAll();
         model.addAttribute("categoryList" , categoryList);
         User user = userService.findByUsername("mainul35");
         model.addAttribute("createdOn", user.getCreatedOn());
         model.addAttribute("createdBy", user.getCreatedBy());
+        if (request.getHeader("x-requested-with") == null) {
+            model.addAttribute("requestPath", "/admin/category/categoryList");
+            return "admin/dashboard";
+        }
         return "admin/categoryList";
     }
 

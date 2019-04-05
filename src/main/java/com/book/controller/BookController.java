@@ -44,15 +44,19 @@ public class BookController extends ControllerBase {
     }
 	@RequestMapping(value = "/addBook", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.ADD_BOOK})
-    public String addBook(Model model) throws AclException {
+    public String addBook(Model model, HttpServletRequest request) throws AclException {
         if (loggedInUser() == null) {
             return "redirect:/admin/login";
         }
-        doAclCheck("addBook", Model.class);
+        doAclCheck("addBook", Model.class, HttpServletRequest.class);
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("categories", categoryService.getAll());
 		model.addAttribute("author", book.getAuthors() == null ? "" : book.getAuthors());
+		if (request.getHeader("x-requested-with") == null) {
+		    model.addAttribute("requestPath", "/admin/book/addBook");
+		    return "admin/dashboard";
+        }
 		return "admin/addBook";
 	}
 
@@ -73,16 +77,20 @@ public class BookController extends ControllerBase {
 
     @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.VIEW_BOOKS})
 	@RequestMapping(value = "/bookList", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String bookList(Model model) throws AclException {
+	public String bookList(Model model, HttpServletRequest request) throws AclException {
         if (loggedInUser() == null) {
             return "redirect:/admin/login";
         }
-        doAclCheck("bookList", Model.class);
+        doAclCheck("bookList", Model.class, HttpServletRequest.class);
         List<Book> bookList = bookService.findAll();
 		model.addAttribute("bookList" , bookList);
         User user = userService.findByUsername("mainul35");
 		model.addAttribute("createdOn", user.getCreatedOn());
 		model.addAttribute("createdBy", user.getCreatedBy());
+        if (request.getHeader("x-requested-with") == null) {
+            model.addAttribute("requestPath", "/admin/book/bookList");
+            return "admin/dashboard";
+        }
 		return "admin/bookList";
 	}
 
