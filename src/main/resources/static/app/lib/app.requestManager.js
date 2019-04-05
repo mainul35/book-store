@@ -1,9 +1,7 @@
 App.RequestManager = (function () {
-    var contentPane = document.querySelector( ".content-pane" );
     return {
         loadContent: function (container, path, event = null) {
             container.onload = function () {
-                App.RequestManager.loader.addLoading(container);
                 $.get( path, function( data ) {
                     App.RequestManager.loader.removeLoading(container);
                     if (event == null) container.innerHTML = data
@@ -17,12 +15,13 @@ App.RequestManager = (function () {
             var routes = document.getElementsByTagName("a")
             for(var i = 0; i< routes.length; i++){
                 routes[i].onclick = function () {
-                    let path = this.getAttribute('path')
+                    var path = this.getAttribute('path')
+                    var contentPane  = document.querySelector('.content-pane')
                     if (path !== null) {
                         history.pushState(path, '', path);
-                        App.RequestManager.loader.addLoading(contentPane);
+                        App.RequestManager.loader.addLoading(contentPane)
                         $.get( path, function( data ) {
-                            App.RequestManager.loader.removeLoading(document.querySelector('.content-pane'));
+                            App.RequestManager.loader.removeLoading(contentPane)
                             contentPane.innerHTML = data;
                         }).fail(function(data) {
                             contentPane.innerHTML = "<p>Failed to process your request.</p>";
@@ -52,7 +51,7 @@ App.RequestManager = (function () {
         loader: {
             addLoading: function (panel) {
                 var loading = "<div class='loader'></div>";
-                panel.append(loading);
+                panel.innerHTML = loading;
             },
 
             removeLoading: function (panel) {
