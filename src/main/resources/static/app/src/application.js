@@ -1,6 +1,7 @@
 application = (function () {
     return {
         initialize: function () {
+            navbar.initialize();
             App.RequestManager.handleRouting();
             if (document.querySelector("requestPath") !== null) {
                 var path = document.querySelector("requestPath").getAttribute("path");
