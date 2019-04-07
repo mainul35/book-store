@@ -18,6 +18,7 @@ import com.book.repository.UserService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.*;
 
 @ComponentScan(basePackages = {
@@ -53,7 +54,9 @@ public class BookShopApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 //        initializer();
-        AppBase.FILE_STORAGE_BASE_DIR = servletContext.getRealPath("\\") + "\\temp";
+//        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File("/resources/");
+        AppBase.FILE_STORAGE_BASE_DIR = (file.getPath() + "/temp/");
         FileUtil.makeDirectory(AppBase.FILE_STORAGE_BASE_DIR);
         AppBase.httpSession = httpSession;
 
