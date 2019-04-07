@@ -53,7 +53,7 @@ public class BookShopApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 //        initializer();
-        AppBase.FILE_STORAGE_BASE_DIR = servletContext.getContextPath() + "/temp/";
+        AppBase.FILE_STORAGE_BASE_DIR = servletContext.getRealPath("/") + "temp/";
         FileUtil.makeDirectory(AppBase.FILE_STORAGE_BASE_DIR);
         AppBase.httpSession = httpSession;
 
