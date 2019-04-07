@@ -21,7 +21,6 @@ var productDisplay = (function () {
         </div>`
     return {
         initialize: function (panel) {
-            App.addCSS("app/src/site/product-display/product-display.css")
             App.RequestManager.loadContentAfterDomReady(panel, '/book/all', function (container, books) {
                 var tempTemplate = ""
                 books.forEach(function (book) {
