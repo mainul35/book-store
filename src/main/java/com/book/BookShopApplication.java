@@ -55,8 +55,8 @@ public class BookShopApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 //        initializer();
 //        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File("/resources/");
-        AppBase.FILE_STORAGE_BASE_DIR = (file.getPath() + "/temp/");
+        File file = new File("/target/classes/static/images/");
+        AppBase.FILE_STORAGE_BASE_DIR = file.getPath();
         FileUtil.makeDirectory(AppBase.FILE_STORAGE_BASE_DIR);
         AppBase.httpSession = httpSession;
 
