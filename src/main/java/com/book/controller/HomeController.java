@@ -17,14 +17,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import com.book.entity.User;
 import com.book.entity.PasswordResetToken;
 import com.book.impl.MailConstructor;
-import com.book.impl.SecurityUtility;
+import com.book.util.EncryptionUtil;
 import com.book.impl.UserSecurityService;
 import com.book.repository.UserService;
 
@@ -94,9 +91,9 @@ public class HomeController extends ControllerBase {
 			return "login";
 		}
 
-		String password = SecurityUtility.randomPassword();
+		String password = EncryptionUtil.randomPassword();
 
-		String encryptedPassword = SecurityUtility.passwordEncoder().encode(password);
+		String encryptedPassword = EncryptionUtil.passwordEncoder().encode(password);
 		user.setPassword(encryptedPassword);
 
 		userService.save(user);
@@ -139,9 +136,9 @@ public class HomeController extends ControllerBase {
 		user.setUsername(username);
 		user.setEmail(userEmail);
 
-		String password = SecurityUtility.randomPassword();
+		String password = EncryptionUtil.randomPassword();
 
-		String encryptedPassword = SecurityUtility.passwordEncoder().encode(password);
+		String encryptedPassword = EncryptionUtil.passwordEncoder().encode(password);
 		user.setPassword(encryptedPassword);
 		
 		List<Role> userRoles = new ArrayList<>();
@@ -190,18 +187,22 @@ public class HomeController extends ControllerBase {
 		return "myProfile";
 	}}
 
+	@GetMapping("/display-products")
+	public String getBooksToDisplay (Model model) {
+	    return "/site/product_display";
+    }
     @Override
     public List<DomainBase> getAll() {
         return null;
     }
 
     @Override
-    public void Save(DomainBase object) {
+    public void save(DomainBase object) {
 
     }
 
     @Override
-    public DomainBase getById(Long id) {
+    public DomainBase details(Long id) {
         return null;
     }
 

@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import com.book.impl.SecurityUtility;
+import com.book.util.EncryptionUtil;
 import com.book.impl.UserSecurityService;
 
 @Configuration
@@ -20,11 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserSecurityService userSecurityService;
 
 	private BCryptPasswordEncoder passwordEncoder() {
-		return SecurityUtility.passwordEncoder();
+		return EncryptionUtil.passwordEncoder();
 	}
 
 	private static final String[] PUBLIC_MATCHERS = {
 			"/css/**",
+			"/site/**",
 			"/js/**",
 			"/image/**",
 			"/fonts/**",
@@ -44,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/newUser",
 			"/forgetPassword",
 			"/login",
-			"/login-processing"
+			"/login-processing",
+			"/book/all"
 	};
 
 	@Override

@@ -11,10 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.book.impl.SecurityUtility;
+import com.book.util.EncryptionUtil;
 import com.book.repository.UserService;
 
 import javax.servlet.ServletContext;
@@ -86,7 +85,7 @@ public class BookShopApplication implements CommandLineRunner{
 		user1.setFirstName("Jahadul");
 		user1.setLastName("Rakib");
 		user1.setUsername("jahadul_rakib");
-		user1.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
+		user1.setPassword(EncryptionUtil.passwordEncoder().encode("secret"));
 		user1.setEmail("rakibdiu2015@gmail.com");
         user1.setCreatedBy("System");
         user1.setUpdatedBy("System");
@@ -108,7 +107,7 @@ public class BookShopApplication implements CommandLineRunner{
         user2.setFirstName("Syed Mainul");
         user2.setLastName("Hasan");
         user2.setUsername("mainul35");
-        user2.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
+        user2.setPassword(EncryptionUtil.passwordEncoder().encode("secret"));
         user2.setEmail("mainuls18@gmail.com");
         role2.getUsers().add(user2);
         user2.setRole(role2);
@@ -132,7 +131,7 @@ public class BookShopApplication implements CommandLineRunner{
         user3.setFirstName("Tanveer");
         user3.setLastName("Hasan");
         user3.setUsername("tanveer");
-        user3.setPassword(SecurityUtility.passwordEncoder().encode("secret"));
+        user3.setPassword(EncryptionUtil.passwordEncoder().encode("secret"));
         user3.setEmail("tanveer@gmail.com");
         role1.getUsers().add(user3);
         user3.setCreatedBy("System");

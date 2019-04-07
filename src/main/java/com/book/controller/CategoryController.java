@@ -3,13 +3,11 @@ package com.book.controller;
 
 import com.book.config.security.permission.AclCheck;
 import com.book.config.security.permission.AclException;
-import com.book.config.security.permission.Permission;
 import com.book.entity.Category;
 import com.book.entity.DomainBase;
 import com.book.entity.User;
 import com.book.impl.UserServiceImpl;
 import com.book.service.CategoryService;
-import com.book.util.AppBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -51,7 +49,7 @@ public class CategoryController extends ControllerBase {
             model.addAttribute("requestPath", "/admin/category/addCategory");
             return "admin/dashboard";
         }
-        return "admin/addCategory";
+        return "admin/category/addCategory";
     }
 
     @AclCheck(permissionNames = {ADMIN_ONLY, ADD_CATEGORY})
@@ -83,7 +81,7 @@ public class CategoryController extends ControllerBase {
             model.addAttribute("requestPath", "/admin/category/categoryList");
             return "admin/dashboard";
         }
-        return "admin/categoryList";
+        return "admin/category/categoryList";
     }
 
     public List<Category> getAllCategories () {
@@ -96,12 +94,12 @@ public class CategoryController extends ControllerBase {
     }
 
     @Override
-    public void Save(DomainBase object) {
+    public void save(DomainBase object) {
 
     }
 
     @Override
-    public DomainBase getById(Long id) {
+    public DomainBase details(Long id) {
         return null;
     }
 

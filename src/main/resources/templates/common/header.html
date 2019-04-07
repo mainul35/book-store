@@ -9,6 +9,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/site/libs/font-awesome.min.css" rel="stylesheet" />
 
 <link href="/css/non-responsive.css" rel="stylesheet" />
 
@@ -68,11 +69,21 @@
 	</div>
 	<div th:fragment="body-bottom-scripts">
 		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+			src="/js/jquery.min.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/css/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
 		<script type="text/javascript"
 				th:src="@{/css/lib/multiple-select/select2.js}"></script>
+		<script type="text/javascript"
+				th:src="@{/app/lib/app.js}"></script>
+		<script type="text/javascript"
+				th:src="@{/app/lib/app.forms.js}"></script>
+		<script type="text/javascript"
+				th:src="@{/app/lib/app.validator.js}"></script>
+		<script type="text/javascript"
+				th:src="@{/app/lib/app.requestManager.js}"></script>
+		<script type="text/javascript"
+				th:src="@{/app/src/site/product-display/product-display.js}"></script>
 	</div>
 </body>
 </html>
