@@ -10,21 +10,17 @@ import com.book.config.security.permission.Permission;
 import com.book.entity.Attachment;
 import com.book.entity.DomainBase;
 import com.book.entity.User;
+import com.book.service.BookService;
 import com.book.impl.UserServiceImpl;
 import com.book.service.AttachmentService;
 import com.book.service.CategoryService;
-import com.book.util.AppBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.book.entity.Book;
-import com.book.repository.BookServiceRepo;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -32,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class BookController extends ControllerBase {
 
 	@Autowired
-	BookServiceRepo bookService;
+    BookService bookService;
 	@Autowired
     UserServiceImpl userService;
 	@Autowired
@@ -57,22 +53,30 @@ public class BookController extends ControllerBase {
 		    model.addAttribute("requestPath", "/admin/book/addBook");
 		    return "admin/dashboard";
         }
-		return "admin/addBook";
+		return "admin/book/addBook";
 	}
 
     @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.ADD_BOOK})
 	@RequestMapping(value = "/addBook", method = RequestMethod.POST)
-	public String addBookPost(@ModelAttribute("book") Book book, HttpServletRequest httpServletRequest, @RequestParam(name = "image") MultipartFile file) throws AclException {
+	public String addBookPost(@ModelAttribute("book") Book book, @RequestParam(name = "image") MultipartFile file, Model model, HttpServletRequest request) throws AclException {
         if (loggedInUser() == null) {
             return "redirect:/admin/login";
         }
-        doAclCheck("addBookPost", Book.class, HttpServletRequest.class, MultipartFile.class);
+        doAclCheck("addBookPost", Book.class, MultipartFile.class, Model.class, HttpServletRequest.class);
         Attachment attachment = new Attachment();
         attachment = attachmentService.save(attachment, file, book.getId());
         book.setPhoto(attachment);
 		bookService.save(book);
-
-		return "redirect:bookList";
+        List<Book> bookList = bookService.findAll();
+        model.addAttribute("bookList" , bookList);
+        User user = loggedInUser();
+        model.addAttribute("createdOn", user.getCreatedOn());
+        model.addAttribute("createdBy", user.getCreatedBy());
+        if (request.getHeader("x-requested-with") == null) {
+            model.addAttribute("requestPath", "/admin/book/bookList");
+            return "admin/dashboard";
+        }
+        return "admin/book/bookList";
 	}
 
     @AclCheck(permissionNames = {Permission.ADMIN_ONLY, Permission.VIEW_BOOKS})
@@ -84,14 +88,14 @@ public class BookController extends ControllerBase {
         doAclCheck("bookList", Model.class, HttpServletRequest.class);
         List<Book> bookList = bookService.findAll();
 		model.addAttribute("bookList" , bookList);
-        User user = userService.findByUsername("mainul35");
+        User user = loggedInUser();
 		model.addAttribute("createdOn", user.getCreatedOn());
 		model.addAttribute("createdBy", user.getCreatedBy());
         if (request.getHeader("x-requested-with") == null) {
             model.addAttribute("requestPath", "/admin/book/bookList");
             return "admin/dashboard";
         }
-		return "admin/bookList";
+		return "admin/book/bookList";
 	}
 
     @Override
@@ -100,13 +104,14 @@ public class BookController extends ControllerBase {
     }
 
     @Override
-    public void Save(DomainBase object) {
+    public void save(DomainBase object) {
 
     }
 
     @Override
-    public DomainBase getById(Long id) {
-        return null;
+    @GetMapping(value = "/details/{id}")
+    public DomainBase details (@PathVariable("id") Long id) {
+        return bookService.getBook(id);
     }
 
     @Override

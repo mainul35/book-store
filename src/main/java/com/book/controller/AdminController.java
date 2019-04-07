@@ -49,12 +49,12 @@ public class AdminController extends ControllerBase {
     }
 
     @Override
-    public void Save(DomainBase object) {
+    public void save(DomainBase object) {
 
     }
 
     @Override
-    public DomainBase getById(Long id) {
+    public DomainBase details (Long id) {
         return null;
     }
 

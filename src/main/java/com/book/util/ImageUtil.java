@@ -76,6 +76,7 @@ public class ImageUtil {
             for (String afterGenerateExtension : afterConvertedExtensions) {
                 Image img = ImageIO.read(file).getScaledInstance(size[0], size[1], BufferedImage.SCALE_SMOOTH);
                 writeImageToFile(img, attachment.getPath()+attachment.getDisplayName()+"_"+size[0]+"_"+size[1]+afterGenerateExtension);
+                attachment.setType(afterGenerateExtension);
             }
         }
     }

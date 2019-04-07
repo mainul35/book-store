@@ -4,13 +4,24 @@ App.RequestManager = (function () {
             container.onload = function () {
                 $.get( path, function( data ) {
                     App.RequestManager.loader.removeLoading(container);
-                    if (event == null) container.innerHTML = data
+                    if (event === null) container.innerHTML = data
                     else event(container, data)
                 }).fail(function(data) {
                     container.innerHTML = "<p>Failed to process your request.</p>";
                 });
             }
         },
+
+        loadContentAfterDomReady: function(container, path, event = null){
+            $.get( path, function( data ) {
+                App.RequestManager.loader.removeLoading(container);
+                if (event === null) container.innerHTML = data
+                else event(container, data)
+            }).fail(function(data) {
+                container.innerHTML = "<p>Failed to process your request.</p>";
+            });
+        },
+
         handleRouting: function () {
             var routes = document.getElementsByTagName("a")
             for(var i = 0; i< routes.length; i++){
@@ -59,6 +70,6 @@ App.RequestManager = (function () {
                     panel.querySelector('.loader').remove();
                 }
             }
-        }
+        },
     }
 }());

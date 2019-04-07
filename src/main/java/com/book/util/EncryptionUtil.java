@@ -1,4 +1,4 @@
-package com.book.impl;
+package com.book.util;
 
 import java.security.SecureRandom;
 import java.util.Random;
@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SecurityUtility {
+public class EncryptionUtil {
 	private static final String SALT = "salt"; // Salt should be protected carefully
 	
 	@Bean

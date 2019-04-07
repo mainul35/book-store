@@ -1,5 +1,6 @@
 package com.book.util;
 
+import com.book.entity.Attachment;
 import com.book.service.AttachmentService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import java.nio.file.Paths;
 
 @Component
 public class FileUtil extends AppBase{
+    @Autowired
+    private ImageUtil imageUtil;
 
     public static File makeDirectory (String path) {
         File dir = Paths.get(path + "//").toFile();
@@ -22,5 +25,16 @@ public class FileUtil extends AppBase{
         }
         System.out.println("Making directory: "+dir.getAbsolutePath());
         return dir;
+    }
+
+    public byte[] readAttachmentAsByteArray (Attachment attachment, int size){
+        byte[] bs = null;
+        try {
+            bs = imageUtil.readImage(attachment, size);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return bs;
     }
 }

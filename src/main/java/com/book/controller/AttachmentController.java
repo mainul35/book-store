@@ -15,20 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AttachmentController {
     @Autowired
     private AttachmentService attachmentService;
-    @Autowired
-    private ImageUtil imageUtil;
 
+    @Autowired
+    private FileUtil fileUtil;
     @RequestMapping(value="/image", method= {RequestMethod.GET,RequestMethod.POST} )
     @ResponseBody
     public byte[] readAttachedFile(@RequestParam(name="imgId") Long id, @RequestParam(value = "size", defaultValue = "0") int size) {
         Attachment attachment = attachmentService.readAttachment(id);
-        byte[] bs = null;
-        try {
-            bs = imageUtil.readImage(attachment, size);
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
-        return bs;
+        return fileUtil.readAttachmentAsByteArray(attachment, size);
     }
 }
