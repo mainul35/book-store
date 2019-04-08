@@ -1,4 +1,4 @@
-App.Forms = (function () {
+App.FormHandler = (function () {
     return {
         serialize: function (form) {
             const values = {};

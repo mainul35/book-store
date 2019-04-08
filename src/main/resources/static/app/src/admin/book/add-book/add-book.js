@@ -1,5 +1,24 @@
-(function () {
-
+AddBook = (function () {
+    var templateForm = `<div class="row">
+    <form class="form-horizontal" th:action="/admin/book/addBook"
+          method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend class="center-block">
+                New Book Information<span style="font-size: small"> * is a
+							required field</span>
+            </legend>
+            <!-- title -->
+            
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <button type="submit" class="btn btn-success">Add Book</button>
+                    <a class="btn btn-danger" th:href="@{/}">Cancel</a>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>`
 }())
 // App.Forms.submit(form, function (e) {
 //     e.preventDefault()

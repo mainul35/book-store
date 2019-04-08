@@ -205,14 +205,4 @@
     </form>
 </div>
 </body>
-<script type="text/javascript" th:inline="javascript">
-    $('#category').select2();
-    var dateToday = new Date();
-    $(
-        "#publicationDate")
-        .datepicker({
-            minDate : dateToday,
-            dateFormat : "d/m/yy"
-        });
-</script>
 </html>
