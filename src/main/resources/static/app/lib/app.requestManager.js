@@ -27,6 +27,7 @@ App.RequestManager = (function () {
             for(var i = 0; i< routes.length; i++){
                 routes[i].onclick = function () {
                     var path = this.getAttribute('path')
+                    var fn = this.getAttribute("onclick")
                     var contentPane  = document.querySelector('.content-pane')
                     if (path !== null) {
                         history.pushState(path, '', path);
@@ -37,6 +38,12 @@ App.RequestManager = (function () {
                         }).fail(function(data) {
                             contentPane.innerHTML = "<p>Failed to process your request.</p>";
                         });
+                    }
+                    if (fn !== null) {
+                        var fn = window[fn];
+                        if(typeof fn === 'function') {
+                            fn(document.querySelector('.content-pane'));
+                        }
                     }
                 }
             }

@@ -6,6 +6,15 @@ App = {
     domEmelentToHTML: function (element) {
         return element.cloneNode(true).querySelector("body").innerHTML;
     },
+    executeFunctionByName: function(functionName, context /*, args */) {
+        var args = Array.prototype.slice.call(arguments, 2);
+        var namespaces = functionName.split(".");
+        var func = namespaces.pop();
+        for(var i = 0; i < namespaces.length; i++) {
+            context = context[namespaces[i]];
+        }
+        return context[func].apply(context, args);
+    }, //https://stackoverflow.com/questions/359788/how-to-execute-a-javascript-function-when-i-have-its-name-as-a-string
     hasClass: function (element, className) {
         if (element.classList)
             return element.classList.contains(className)

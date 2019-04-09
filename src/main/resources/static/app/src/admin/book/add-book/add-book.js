@@ -1,24 +1,54 @@
 AddBook = (function () {
-    var templateForm = `<div class="row">
-    <form class="form-horizontal" th:action="/admin/book/addBook"
-          method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend class="center-block">
-                New Book Information<span style="font-size: small"> * is a
-							required field</span>
-            </legend>
-            <!-- title -->
-            
-            <div class="form-group">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <button type="submit" class="btn btn-success">Add Book</button>
-                    <a class="btn btn-danger" th:href="@{/}">Cancel</a>
-                </div>
-            </div>
-        </fieldset>
-    </form>
-</div>`
+    var templateForm = ``
+
+    return {
+        initialize: function (panel) {
+            App.RequestManager.addLoading(panel)
+            var bookName = new TextBox({id: 'bookTitle', title: 'Title', name: 'title', required: true})
+            var author = new TextBox({id: 'author', title: 'Author', name: 'author', required: true})
+            var isbn = new TextBox({id: 'isbn', title: 'ISBN', name: 'isbn'})
+            var publisher = new TextBox({id: 'publisher', title: 'ISBN', name: 'publisher'})
+            var publicationDate = new TextBox({})
+            var availableLanguages = new SelectFromOptions({})
+            var availableCategories = new SelectFromOptions({})
+            var availableFormats = new SelectFromOptions({})
+            var totalPages = new TextBox({})
+            var price = new TextBox({})
+            var status = new CheckBoxGroup({})
+            var description = new TextArea({})
+            var image = new FileField({})
+            var submitButton = new SubmitButton({})
+
+            var formTemplate = new Form({action: '/admin/boook/addBook', enableMultipart: true})
+                .addField(bookName)
+                .addField(author)
+                .addField(isbn)
+                .addField(publisher)
+                .addField(publicationDate)
+                .addField(availableLanguages)
+                .addField(availableCategories)
+                .addField(availableFormats)
+                .addField(totalPages)
+                .addField(price)
+                .addField(status)
+                .addField(description)
+                .addField(image)
+                .addField(submitButton)
+                .build()
+            App.RequestManager.removeLoading(panel)
+            panel.innerHTML = formTemplate
+
+            setTimeout(function () {
+                $('#category').select2();
+                var dateToday = new Date();
+                $("#publicationDate")
+                    .datepicker({
+                        minDate : dateToday,
+                        dateFormat : "d/m/yy"
+                    });
+            }, 1000)
+        }
+    }
 }())
 // App.Forms.submit(form, function (e) {
 //     e.preventDefault()

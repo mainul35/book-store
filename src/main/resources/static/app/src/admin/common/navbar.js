@@ -63,7 +63,7 @@ var navbar = (function () {
                         class="menu-arrow arrow_carrot-right"></span>
                 </a>
                     <ul class="sub">
-                        <li><a onmouseout="this.style.cursor='default'" onmouseover="this.style.cursor='pointer'" class="" path="/admin/book/addBook">Add Books</a></li>
+                        <li><a onmouseout="this.style.cursor='default'" onmouseover="this.style.cursor='pointer'" class="" onclick="AddBook.initialize">Add Books</a></li>
                         <li><a onmouseout="this.style.cursor='default'" onmouseover="this.style.cursor='pointer'" class="" path="/admin/book/bookList">All Books</a></li>
                     </ul></li>
                 <li class="sub-menu"><a class=""> <i
