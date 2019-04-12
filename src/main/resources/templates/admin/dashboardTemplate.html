@@ -6,8 +6,14 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-sm">
-        <canvas id="myChart" width="400" height="400"></canvas>
+                <div class="wrapper col-2">
+                    <canvas id="ChartForOrders" width="378" height="256" class="chartjs-render-monitor" style="display: block; width: 378px; height: 256px;"></canvas>
+                </div>
+                <div class="col-sm">
+                <h3>Monthly</h3>
+                <canvas id="#daily_monthly" width="400" height="350"></canvas>
+            </div>
+        </div>
     </div>
     <div class="col-sm">
         One of three columns
@@ -17,4 +23,6 @@
     </div>
 </div>
 </body>
+<script src="/app/src/admin/dashboard/utils.js"></script>
+<script src="/app/src/admin/dashboard/Dashboard.js"></script>
 </html>
