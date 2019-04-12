@@ -9,6 +9,9 @@ application = (function () {
                     App.RequestManager.loader.addLoading(document.querySelector(".content-pane"));
                     App.RequestManager.loadContent(document.querySelector("body"), path, function (container, data) {
                         var contentPane = container.querySelector(".content-pane")
+                        var elem = App.htmlToDOMElement(data)
+                        var jsList = elem.getElementsByTagName("script")
+                        App.reloadJsInContent(jsList)
                         contentPane.innerHTML = data
                     });
                 }

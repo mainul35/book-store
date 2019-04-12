@@ -27,23 +27,19 @@ App.RequestManager = (function () {
             for(var i = 0; i< routes.length; i++){
                 routes[i].onclick = function () {
                     var path = this.getAttribute('path')
-                    var fn = this.getAttribute("onclick")
                     var contentPane  = document.querySelector('.content-pane')
                     if (path !== null) {
                         history.pushState(path, '', path);
                         App.RequestManager.loader.addLoading(contentPane)
                         $.get( path, function( data ) {
                             App.RequestManager.loader.removeLoading(contentPane)
+                            var elem = App.htmlToDOMElement(data)
+                            var jsList = elem.getElementsByTagName("script")
+                            App.reloadJsInContent(jsList)
                             contentPane.innerHTML = data;
                         }).fail(function(data) {
                             contentPane.innerHTML = "<p>Failed to process your request.</p>";
                         });
-                    }
-                    if (fn !== null) {
-                        var fn = window[fn];
-                        if(typeof fn === 'function') {
-                            fn(document.querySelector('.content-pane'));
-                        }
                     }
                 }
             }

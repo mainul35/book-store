@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="row">
-    <form class="form-horizontal" th:action="@{/admin/book/addBook}" onload="AddBook.initialize()"
+    <form class="form-horizontal" th:action="@{/admin/book/addBook}"
           method="post" enctype="multipart/form-data" th:object="${book}">
         <fieldset>
             <legend class="center-block">
@@ -205,4 +205,5 @@
     </form>
 </div>
 </body>
+<script src="/app/src/admin/book/add-book/AddBook.js"></script>
 </html>

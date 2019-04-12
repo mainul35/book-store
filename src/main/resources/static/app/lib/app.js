@@ -6,15 +6,6 @@ App = {
     domEmelentToHTML: function (element) {
         return element.cloneNode(true).querySelector("body").innerHTML;
     },
-    executeFunctionByName: function(functionName, context /*, args */) {
-        var args = Array.prototype.slice.call(arguments, 2);
-        var namespaces = functionName.split(".");
-        var func = namespaces.pop();
-        for(var i = 0; i < namespaces.length; i++) {
-            context = context[namespaces[i]];
-        }
-        return context[func].apply(context, args);
-    }, //https://stackoverflow.com/questions/359788/how-to-execute-a-javascript-function-when-i-have-its-name-as-a-string
     hasClass: function (element, className) {
         if (element.classList)
             return element.classList.contains(className)
@@ -55,6 +46,15 @@ App = {
     },
     addJS: function (jsURL) {
         var script = document.createElement('script');
+        var contextPathMatcher = jsURL.match(/(http[s]?:\/\/.+?\/)/)
+        if (contextPathMatcher !== null) {
+            jsURL = jsURL.replace(contextPathMatcher[0], "");
+        }
+        var fileNameMatcher = jsURL.split("/")[jsURL.split("/").length-1].match(/.+?(?=\.)/)
+        var fileName = ""
+        if (fileNameMatcher !== null) {
+            fileName = fileNameMatcher[0]
+        }
         script.onload = function () {
             //TODO
             console.log('loading js: ' + jsURL)
@@ -74,5 +74,26 @@ App = {
         if (!found) {
             document.head.appendChild(script);
         }
+        return fileName
+    },
+    reloadJsInContent: function (jsList) {
+        for (var i = 0; i < jsList.length; i++) {
+            if (jsList[i].src) {
+                var src = jsList[i].src
+                jsList[i].parentNode.removeChild(jsList[i]);
+                setTimeout(function () {
+                    var fileName = App.addJS(src)
+                    setTimeout(function () {
+                        window[fileName].initialize(window.document.querySelector(".content-pane"))
+                    }, 500)
+                }, 200)
+            }
+        }
+    },
+    
+    reloadResources: function (document) {
+        var elem = App.htmlToDOMElement(document)
+        var jsList = elem.getElementsByTagName("script")
+        App.reloadJsInContent(jsList)
     }
 }
