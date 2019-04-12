@@ -22,12 +22,24 @@ var Form = (function (props) {
         }
     }
 })
+
+/**
+ * @param props.id Field ID
+ * @param props.class Field classes as String
+ * @param props.title Field Title
+ * @param props.title Field Title
+ * @param props.type Field type
+ * @param props.name Field name
+ * @param props.value Field value
+ * @param props.placeholder Field Placeholder
+ * @param props.disabled If the field is disabled
+ * */
 var TextBox = (function (props) {
     return App.htmlToDOMElement(`<div class="form-group">
         <label class="col-md-2 control-label" for="${props.id ? props.id : ''}">${props.title ? props.title : ''}</label>
         <div class="col-md-8">
-            <input type="${props.type ? props.type : ''}" name="${props.name ? props.name : ''}" class="form-control ${props.class ? props.class : ''}" id="${props.id}"
-                   value="${props.value ? props.value : ''}" required="${props.required ? props.required : ''}" placeholder="${props.placeholder ? props.placeholder : ''}" ${props.disabled ? props.disabled : ''}/>
+            <input type="${props.type ? props.type : 'text'}" name="${props.name ? props.name : ''}" class="form-control ${props.class ? props.class : ''}" id="${props.id}"
+                   value="${props.value ? props.value : ''}" ${props.required ? 'required' : ''}" placeholder="${props.placeholder ? props.placeholder : ''}" ${props.disabled ? 'disabled' : ''}/>
             <span class="help-block">${props.notification ? props.notification : ''}</span>
         </div>
     </div>`)
@@ -39,7 +51,7 @@ var RadioGroup = (function (props) {
         if (props.items) {
             props.items.forEach(function (item) {
                 template +=   `<label><input value="${item.id ? item.id :''}" type="checkbox" name="${props.name ? props.name : ''}"
-                            checked="${item.isChecked == true ? checked : ''}"/> ${item.value ? item.value : ''} </label>`
+                            ${item.isChecked == true ? 'checked' : ''}/> ${item.value ? item.value : ''} </label>`
             })
         }
         return template

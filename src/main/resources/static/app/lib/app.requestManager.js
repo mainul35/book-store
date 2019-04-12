@@ -33,6 +33,9 @@ App.RequestManager = (function () {
                         App.RequestManager.loader.addLoading(contentPane)
                         $.get( path, function( data ) {
                             App.RequestManager.loader.removeLoading(contentPane)
+                            var elem = App.htmlToDOMElement(data)
+                            var jsList = elem.getElementsByTagName("script")
+                            App.reloadJsInContent(jsList)
                             contentPane.innerHTML = data;
                         }).fail(function(data) {
                             contentPane.innerHTML = "<p>Failed to process your request.</p>";

@@ -63,6 +63,10 @@ public class BookController extends ControllerBase {
             return "redirect:/admin/login";
         }
         doAclCheck("addBookPost", Book.class, MultipartFile.class, Model.class, HttpServletRequest.class);
+        if (request.getHeader("x-requested-with") == null) {
+            model.addAttribute("requestPath", "/admin/book/bookList");
+            return "admin/dashboard";
+        }
         Attachment attachment = new Attachment();
         attachment = attachmentService.save(attachment, file, book.getId());
         book.setPhoto(attachment);
@@ -72,10 +76,6 @@ public class BookController extends ControllerBase {
         User user = loggedInUser();
         model.addAttribute("createdOn", user.getCreatedOn());
         model.addAttribute("createdBy", user.getCreatedBy());
-        if (request.getHeader("x-requested-with") == null) {
-            model.addAttribute("requestPath", "/admin/book/bookList");
-            return "admin/dashboard";
-        }
         return "admin/book/bookList";
 	}
 

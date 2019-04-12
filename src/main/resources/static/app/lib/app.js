@@ -46,6 +46,15 @@ App = {
     },
     addJS: function (jsURL) {
         var script = document.createElement('script');
+        var contextPathMatcher = jsURL.match(/(http[s]?:\/\/.+?\/)/)
+        if (contextPathMatcher !== null) {
+            jsURL = jsURL.replace(contextPathMatcher[0], "");
+        }
+        var fileNameMatcher = jsURL.split("/")[jsURL.split("/").length-1].match(/.+?(?=\.)/)
+        var fileName = ""
+        if (fileNameMatcher !== null) {
+            fileName = fileNameMatcher[0]
+        }
         script.onload = function () {
             //TODO
             console.log('loading js: ' + jsURL)
@@ -65,5 +74,26 @@ App = {
         if (!found) {
             document.head.appendChild(script);
         }
+        return fileName
+    },
+    reloadJsInContent: function (jsList) {
+        for (var i = 0; i < jsList.length; i++) {
+            if (jsList[i].src) {
+                var src = jsList[i].src
+                jsList[i].parentNode.removeChild(jsList[i]);
+                setTimeout(function () {
+                    var fileName = App.addJS(src)
+                    setTimeout(function () {
+                        window[fileName].initialize(window.document.querySelector(".content-pane"))
+                    }, 500)
+                }, 200)
+            }
+        }
+    },
+    
+    reloadResources: function (document) {
+        var elem = App.htmlToDOMElement(document)
+        var jsList = elem.getElementsByTagName("script")
+        App.reloadJsInContent(jsList)
     }
 }

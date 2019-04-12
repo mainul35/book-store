@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -35,12 +36,16 @@ public class AdminController extends ControllerBase {
 
 	@AclCheck(permissionNames = {Permission.ADMIN_ONLY})
 	@RequestMapping("/dashboard")
-	public String logIn() throws AclException {
+	public String logIn(Model model, HttpServletRequest request) throws AclException {
 	    if (loggedInUser() == null) {
 	        return "redirect:/admin/login";
         }
-        super.doAclCheck("logIn");
-		return "admin/dashboard";
+        super.doAclCheck("logIn", Model.class, HttpServletRequest.class);
+        if (request.getHeader("x-requested-with") == null) {
+            model.addAttribute("requestPath", "/admin/dashboard");
+            return "admin/dashboard";
+        }
+		return "admin/dashboardTemplate";
 	}
 
     @Override

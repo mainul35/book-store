@@ -55,9 +55,8 @@ var navbar = (function () {
         <div id="sidebar" class="nav-collapse ">
             <!-- sidebar menu start-->
             <ul class="sidebar-menu">
-                <li class="active"><a class="" th:href="@{/admin/dashboard}"> <i
-                        class="icon_house_alt"></i> <span>Dashboard</span>
-                </a></li>
+                <li class="active"></li>
+                <li><a onmouseout="this.style.cursor='default'" onmouseover="this.style.cursor='pointer'" class="" href="/admin/dashboard">Dashboard</a></li>
                 <li class="sub-menu"><a class=""> <i
                         class="icon_document_alt"></i> <span>Books</span> <span
                         class="menu-arrow arrow_carrot-right"></span>

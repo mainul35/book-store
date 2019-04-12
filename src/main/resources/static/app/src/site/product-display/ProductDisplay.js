@@ -1,4 +1,4 @@
-var productDisplay = (function () {
+var ProductDisplay = (function () {
 
     var itemTemplate = `<div class="col-md-3 col-sm-6">
             <div class="product-grid2">
