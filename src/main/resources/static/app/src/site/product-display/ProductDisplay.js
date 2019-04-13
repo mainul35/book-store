@@ -1,5 +1,4 @@
 var ProductDisplay = (function () {
-
     var itemTemplate = `<div class="col-md-3 col-sm-6">
             <div class="product-grid2">
                 <div class="product-image2">
@@ -18,9 +17,12 @@ var ProductDisplay = (function () {
                     <span class="price">$599.99</span>
                 </div>
             </div>
-        </div>`
+        </div>
+`
     return {
         initialize: function (panel) {
+            App.addCSS("app/src/site/product-details/ProductDetails.css")
+            App.addJS("app/src/site/product-details/ProductDetails.js")
             App.RequestManager.loadContentAfterDomReady(panel, '/book/all', function (container, books) {
                 var tempTemplate = ""
                 books.forEach(function (book) {
@@ -36,8 +38,15 @@ var ProductDisplay = (function () {
                     priceElement.setAttribute("id", book.id)
                     priceElement.innerHTML = book.originalPrice
                     tempTemplate += App.domEmelentToHTML(element)
+                    panel.innerHTML = tempTemplate
+
+                    document.querySelector(".quick-view").addEventListener("click", function (e) {
+                        var details = ProductDetailsInitializer.initialize(panel, book)
+                    })
+                    document.querySelector(".add-to-cart").addEventListener("click", function (e) {
+                        var details = ProductDetailsInitializer.initialize(panel, book)
+                    })
                 })
-                panel.innerHTML = tempTemplate
             })
         },
     }
