@@ -2,13 +2,34 @@ var Dashboard = (function () {
     return {
         initialize: function (panel) {
             setTimeout(function () {
-                ChartForOrders.initialize(panel)
-            }, 300)
+                var chartForOrders = new LineChart({chartTitle: 'Orders', chartLabel: "Orders Per Month"})
+                chartForOrders.initialize(panel.querySelector("#ChartForOrders"))
+                var chartForSales = new LineChart({chartTitle: 'Sales', chartLabel: "Sales Per Month"})
+                chartForSales.initialize(panel.querySelector("#ChartForSales"))
+                var chartForSiteReach = new LineChart({chartTitle: 'Site Reached', chartLabel: "Site Reached Per Month"})
+                chartForSiteReach.initialize(panel.querySelector("#ChartForSiteReach"))
+                var chartForProductReturns = new LineChart({chartTitle: 'Products Return', chartLabel: "Products Return Per Month"})
+                chartForProductReturns.initialize(panel.querySelector("#ChartForProductReturns"))
+                var chartForEarnings = new LineChart({chartTitle: 'Earnings', chartLabel: "Earnings Per Month"})
+                chartForEarnings.initialize(panel.querySelector("#ChartForEarnings"))
+                var chartForExpenditures = new LineChart({chartTitle: 'Expenditures', chartLabel: "Expenditures Per Month"})
+                chartForExpenditures.initialize(panel.querySelector("#ChartForExpenditures"))
+                var chartForMonthlyProfit = new LineChart({chartTitle: 'Monthly Profit', chartLabel: "Monthly Profit Per Month"})
+                chartForMonthlyProfit.initialize(panel.querySelector("#ChartForMonthlyProfit"))
+            }, 100)
         }
     }
 }())
 
-var ChartForOrders = (function () {
+/**
+ * initParams should contain a js object containing ->
+ * labelsForData: []
+ * data: []
+ * chartTitle: String
+ * chartLabel: String
+ * chartType: String
+ * */
+var LineChart = (function (initParams) {
     var presets = window.chartColors;
     var utils = Samples.utils;
     var inputs = {
@@ -53,11 +74,9 @@ var ChartForOrders = (function () {
     }
 
     return {
-        initialize: function (panel) {
-
-
+        initialize: function (chartElement) {
             utils.srand(8);
-            new Chart('ChartForOrders', {
+            new Chart(chartElement, {
                 type: 'line',
                 data: {
                     labels: generateLabels(),
@@ -65,17 +84,17 @@ var ChartForOrders = (function () {
                         backgroundColor: utils.transparentize(presets.red),
                         borderColor: presets.red,
                         data: generateData(),
-                        label: 'Daily Order Chart',
+                        label: initParams.chartLabel,
                         fill: false
                     }]
                 },
                 options: Chart.helpers.merge(options, {
                     title: {
-                        text: 'Orders',
+                        text: initParams.chartTitle,
                         display: true
                     }
                 })
             });
         }
     }
-}())
+})
