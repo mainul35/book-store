@@ -43,7 +43,7 @@ var ProductDisplay = (function () {
                     document.querySelector(".quick-view").addEventListener("click", function (e) {
                         var details = ProductDetailsInitializer.initialize(panel, book)
                     })
-                    document.querySelector(".add-to-cart").addEventListener("click", function (e) {
+                    document.querySelector("a.add-to-cart").addEventListener("click", function (e) {
                         var details = ProductDetailsInitializer.initialize(panel, book)
                     })
                 })
