@@ -1,8 +1,6 @@
-var ProductDetails = function () {
-    detailsTemplate = `
-    <main>
-  <div class="container">
-    <div class="row">
+var ProductDetailsInitializer = (function () {
+    var detailsTemplate = `
+   <div class="row">
       <div class="col-lg-12">
         <div class="card mb-10">
           <div class="card-header">
@@ -24,11 +22,7 @@ var ProductDetails = function () {
               <div class="product-gallery">
                 <div class="product-gallery-thumbnails">
                   <ol class="thumbnails-list list-unstyled">
-                    <li><img src="https://via.placeholder.com/350x350/ffcf5b" alt=""></li>
-                    <li><img src="https://via.placeholder.com/350x350/f16a22" alt=""></li>
-                    <li><img src="https://via.placeholder.com/350x350/d3ffce" alt=""></li>
-                    <li><img src="https://via.placeholder.com/350x350/7937fc" alt=""></li>
-                    <li><img src="https://via.placeholder.com/350x350/930000" alt=""></li>
+                    <li><img class="img-thumb" src="https://via.placeholder.com/350x350/ffcf5b" alt=""></li>
                   </ol>
                 </div>
                 <div class="product-gallery-featured">
@@ -116,12 +110,13 @@ var ProductDetails = function () {
         </div>
       </div>
     </div>
-  </div>
-</main>
 `
     return {
-        initialize: function (panel, productId) {
-            
+        initialize: function (panel, productData = null) {
+            var elem = App.htmlToDOMElement(detailsTemplate)
+            elem.querySelector(".img-thumb").setAttribute("src", `/image?imgId=${productData.photo.id}&size=100`)
+            elem.querySelector(".product-gallery-featured > img").setAttribute("src", `/image?imgId=${productData.photo.id}&size=240`)
+            panel.innerHTML = App.domEmelentToHTML(elem)
         }
     }
-}
+}())
