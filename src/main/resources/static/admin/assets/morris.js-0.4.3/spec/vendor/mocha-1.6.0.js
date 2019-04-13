@@ -4792,7 +4792,7 @@ exports.highlightTags = function(name) {
   }
 };
 
-}); // module: utils.js
+}); // module: chart-utils.js
 /**
  * Node shims.
  *
