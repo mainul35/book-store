@@ -77,18 +77,19 @@ App = {
         return fileName
     },
     reloadJsInContent: function (jsList) {
-        for (var i = 0; i < jsList.length; i++) {
-            if (jsList[i].src) {
-                var src = jsList[i].src
-                jsList[i].parentNode.removeChild(jsList[i]);
+        Array.from(jsList).forEach(function (item, i) {
+            if (item.src) {
+                var src = item.src
+                item.parentNode.removeChild(item);
                 setTimeout(function () {
                     var fileName = App.addJS(src)
                     setTimeout(function () {
-                        window[fileName].initialize(window.document.querySelector(".content-pane"))
+                        if (window[fileName]!== undefined)
+                            window[fileName].initialize(window.document.querySelector(".content-pane"))
                     }, 500)
                 }, 200)
             }
-        }
+        })
     },
     
     reloadResources: function (document) {
