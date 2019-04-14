@@ -38,6 +38,20 @@ var ProductDisplay = (function () {
                 details.initialize(panel)
                 history.pushState(id, "Book | "+data.title, "/books/"+id)
             })
+
+            elem.querySelector(".product-title").addEventListener("click", function (e) {
+                var id = this.getAttribute("product-id")
+                var data = {}
+                for (var i = 0; i < dataList.length; i++) {
+                    if (dataList[i].id == id) {
+                        data = dataList[i]
+                        break
+                    }
+                }
+                var details = new ProductDetailsInitializer(data)
+                details.initialize(panel)
+                history.pushState(id, "Book | "+data.title, "/books/"+id)
+            })
         })
     }
     return {
@@ -54,10 +68,10 @@ var ProductDisplay = (function () {
                     element.querySelector(".add-to-wishlist").setAttribute("product-id", book.id)
                     element.querySelector(".add-to-cart").setAttribute("product-id", book.id)
                     var productTitleElement = element.querySelector(".product-title")
-                    productTitleElement.setAttribute("id", book.id)
+                    productTitleElement.setAttribute("product-id", book.id)
                     productTitleElement.innerHTML = book.title
                     var priceElement = element.querySelector(".price")
-                    priceElement.setAttribute("id", book.id)
+                    priceElement.setAttribute("product-id", book.id)
                     priceElement.innerHTML = book.originalPrice
                     tempTemplate += App.domEmelentToHTML(element)
                 })
