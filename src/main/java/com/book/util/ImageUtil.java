@@ -4,6 +4,7 @@ import com.book.entity.Attachment;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -11,10 +12,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
 
 @Component
@@ -81,22 +79,37 @@ public class ImageUtil {
         }
     }
 
+    public static void generateThumbs (File file) throws IOException {
+        for (int[] size : sizes) {
+            for (String afterGenerateExtension : afterConvertedExtensions) {
+                Image img = ImageIO.read(file).getScaledInstance(size[0], size[1], BufferedImage.SCALE_SMOOTH);
+                writeImageToFile(img, "C:/temp/thumbs/img_not_found"+"_"+size[0]+"_"+size[1]+afterGenerateExtension);
+            }
+        }
+    }
+
     public byte[] readImage(Attachment attachment, int size) throws IOException {
         InputStream in = null;
         String filePath = "";
-        for (int[] widthAndHeight : sizes) {
-            if (widthAndHeight[0] == size) {
-                filePath = attachment.getPath()+attachment.getDisplayName()+"_"+widthAndHeight[0]+"_"+widthAndHeight[1]+attachment.getType();
+        File file = null;
+        try {
+            for (int[] widthAndHeight : sizes) {
+                if (widthAndHeight[0] == size) {
+                    filePath = attachment.getPath()+attachment.getDisplayName()+"_"+widthAndHeight[0]+"_"+widthAndHeight[1]+attachment.getType();
+                }
             }
+
+            in = new FileInputStream(filePath);
+            return IOUtils.toByteArray(in);
+        } catch (FileNotFoundException e) {
+            for (int[] widthAndHeight : sizes) {
+                if (widthAndHeight[0] == size) {
+                    filePath = "classpath:static/image/book/img_not_found_" + widthAndHeight[0] + "_" + widthAndHeight[1] + ".jpg";
+                }
+            }
+            file = ResourceUtils.getFile(filePath);
+            in = new FileInputStream(file);
+            return IOUtils.toByteArray(in);
         }
-        if (filePath == "") {
-            filePath = attachment.getPath()+attachment.getDisplayName()+"_128_144"+attachment.getType();
-        }
-        if (servletContext.getResourceAsStream(filePath) == null) {
-            in = new FileInputStream(new File(filePath));
-        } else {
-            in = servletContext.getResourceAsStream(filePath);
-        }
-        return IOUtils.toByteArray(in);
     }
 }

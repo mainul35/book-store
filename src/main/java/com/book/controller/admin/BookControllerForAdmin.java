@@ -1,31 +1,30 @@
-package com.book.controller;
-
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
+package com.book.controller.admin;
 
 import com.book.config.security.permission.AclCheck;
 import com.book.config.security.permission.AclException;
 import com.book.config.security.permission.Permission;
+import com.book.controller.ControllerBase;
 import com.book.entity.Attachment;
+import com.book.entity.Book;
 import com.book.entity.DomainBase;
 import com.book.entity.User;
-import com.book.service.BookService;
 import com.book.impl.UserServiceImpl;
 import com.book.service.AttachmentService;
+import com.book.service.BookService;
 import com.book.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import com.book.entity.Book;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/book")
-public class BookController extends ControllerBase {
+public class BookControllerForAdmin extends ControllerBase {
 
 	@Autowired
     BookService bookService;
@@ -35,7 +34,7 @@ public class BookController extends ControllerBase {
     CategoryService categoryService;
 	@Autowired
     AttachmentService attachmentService;
-    public BookController (){
+    public BookControllerForAdmin (){
         super.setInstance(this);
     }
 	@RequestMapping(value = "/addBook", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

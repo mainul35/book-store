@@ -222,7 +222,9 @@
 
 	<div th:replace="common/header :: body-bottom-scripts"></div>
 <script>
-	ProductDisplay.initialize(document.querySelector(".container > .row"))
+	var elem = document.querySelector(".container > .row")
+	App.addClass(elem, "content-pane")
+	ProductDisplay.initialize(elem)
 </script>
 </body>
 </html>
