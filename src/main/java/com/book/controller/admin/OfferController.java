@@ -1,5 +1,6 @@
-package com.book.controller;
+package com.book.controller.admin;
 
+import com.book.controller.ControllerBase;
 import com.book.entity.DomainBase;
 import org.springframework.stereotype.Controller;
 

@@ -1,7 +1,8 @@
-package com.book.controller;
+package com.book.controller.admin;
 import com.book.config.security.permission.AclCheck;
 import com.book.config.security.permission.AclException;
 import com.book.config.security.permission.Permission;
+import com.book.controller.ControllerBase;
 import com.book.entity.DomainBase;
 import com.book.impl.UserSecurityService;
 import com.book.repository.UserService;

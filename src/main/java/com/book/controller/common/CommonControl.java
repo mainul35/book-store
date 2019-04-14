@@ -1,6 +1,7 @@
-package com.book.controller;
+package com.book.controller.common;
 
 import com.book.config.security.AuthenticationConfiguration;
+import com.book.controller.ControllerBase;
 import com.book.entity.Book;
 import com.book.entity.DomainBase;
 import com.book.entity.User;

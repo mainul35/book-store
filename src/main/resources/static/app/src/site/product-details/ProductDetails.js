@@ -1,6 +1,5 @@
-var ProductDetailsInitializer = (function () {
+var ProductDetailsInitializer = (function (data) {
     var detailsTemplate = `
-   <div class="row">
       <div class="col-lg-12">
         <div class="card mb-10">
           <div class="card-header">
@@ -30,7 +29,7 @@ var ProductDetailsInitializer = (function () {
                 </div>
               </div>
               <div class="product-seller-recommended">
-                <h3 class="mb-5">More from David's Store</h3>
+                <h3 class="mb-5">More from Lee's Store</h3>
                 <div class="recommended-items card-deck">
                   <div class="card">
                     <img src="https://via.placeholder.com/157x157" alt="" class="card-img-top">
@@ -109,14 +108,13 @@ var ProductDetailsInitializer = (function () {
           </div>
         </div>
       </div>
-    </div>
 `
     return {
-        initialize: function (panel, productData = null) {
+        initialize: function (panel) {
             var elem = App.htmlToDOMElement(detailsTemplate)
-            elem.querySelector(".img-thumb").setAttribute("src", `/image?imgId=${productData.photo.id}&size=100`)
-            elem.querySelector(".product-gallery-featured > img").setAttribute("src", `/image?imgId=${productData.photo.id}&size=240`)
+            elem.querySelector(".img-thumb").setAttribute("src", `/image?imgId=${data.photo.id}&size=100`)
+            elem.querySelector(".product-gallery-featured > img").setAttribute("src", `/image?imgId=${data.photo.id}&size=240`)
             panel.innerHTML = App.domEmelentToHTML(elem)
         }
     }
-}())
+})

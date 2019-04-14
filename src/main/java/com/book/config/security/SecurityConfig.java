@@ -52,20 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.authorizeRequests()
-			.antMatchers(PUBLIC_MATCHERS).permitAll()
-			.antMatchers("/admin/book/**").hasRole("ADMIN")
-			.anyRequest().authenticated()
-//		.and()
-//			.formLogin()
-//			.loginPage("/my-account")
-//			.loginProcessingUrl("/login-processing")
-//			.usernameParameter("username")
-//			.passwordParameter("password")
-//			.successHandler(successHandler)
-//            .failureUrl("/login?error")
-//            .permitAll()
-			.and()
+			.authorizeRequests().anyRequest().permitAll().and()
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/?logout").deleteCookies("remember-me").permitAll()
 			.and()

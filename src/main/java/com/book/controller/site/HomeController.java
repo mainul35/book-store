@@ -1,10 +1,11 @@
-package com.book.controller;
+package com.book.controller.site;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.book.config.security.permission.AclCheck;
 import com.book.config.security.permission.Permission;
+import com.book.controller.ControllerBase;
 import com.book.entity.DomainBase;
 import com.book.entity.Role;
 import com.book.service.RoleService;
