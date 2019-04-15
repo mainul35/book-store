@@ -1,4 +1,4 @@
-var ProductDetailsInitializer = (function (data) {
+var ProductDetails = (function () {
     var detailsTemplate = `
       <div class="col-lg-12">
         <div class="card mb-10">
@@ -7,7 +7,7 @@ var ProductDetailsInitializer = (function (data) {
               <a href="#" class="btn btn-link">Back to the list</a>
 
               <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">T-Shirts</li>
+                <li class="breadcrumb-item active" aria-current="page">Books</li>
               </ol>
 
               <div class="btn-group">
@@ -97,6 +97,7 @@ var ProductDetailsInitializer = (function (data) {
               <p class="last-sold text-muted"><small>145 items sold</small></p>
               <h4 class="product-title mb-2">T-shirt Nickony - XXL Black and White - 100% cotton - Limited Stock</h4>
               <h2 class="product-price display-4">$ 25.00</h2>
+              <h2 class="product-isbn display-4">$ 25.00</h2>
               <p class="text-success"><i class="fa fa-credit-card"></i> 12x or  5x $ 5.00</p>
               <p class="mb-0"><i class="fa fa-truck"></i> Delivery in all territory</p>
               <div class="text-muted mb-2"><small>know more about delivery time and shipping forms</small></div>
@@ -110,9 +111,12 @@ var ProductDetailsInitializer = (function (data) {
       </div>
 `
     return {
-        initialize: function (panel) {
+        initialize: function (panel, data) {
             var elem = App.htmlToDOMElement(detailsTemplate)
             elem.querySelector(".img-thumb").setAttribute("src", `/image?imgId=${data.photo.id}&size=100`)
+            elem.querySelector(".product-price").innerText = "$ " + data.originalPrice
+            elem.querySelector(".product-isbn").innerText = data.isbn
+            elem.querySelector(".product-title").innerText = data.title
             elem.querySelector(".product-gallery-featured > img").setAttribute("src", `/image?imgId=${data.photo.id}&size=240`)
             panel.innerHTML = App.domEmelentToHTML(elem)
         }

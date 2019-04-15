@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,15 +27,19 @@ public class BookControllerForSite extends ControllerBase {
     private BookService bookService;
     @GetMapping(value = "/books")
     @ResponseBody public List<Book> books (HttpServletRequest request, HttpServletResponse response) {
-        Map<String, String[]> params = request.getParameterMap();
-        return (List<Book>) this.checkRequestTypeAndPerformAction(request, response, bookService.findAll());
+        Map<String, String> params = new HashMap<>();
+        params.put("object", "ProductDisplay");
+        params.put("hasParam", "false");
+        return (List<Book>) this.checkRequestTypeAndPerformAction(request, response, bookService.findAll(), params);
     }
 
     @GetMapping(value = "/books/{id}")
     @ResponseBody public Book book(@PathVariable(name = "id") String id, HttpServletRequest request, HttpServletResponse response) {
-        Map<String, String[]> params = request.getParameterMap();
+        Map<String, String> params = new HashMap<>();
+        params.put("object", "ProductDetails");
+        params.put("hasParam", "true");
         Book book = bookService.getBook(Long.parseLong(id));
-        return (Book) this.checkRequestTypeAndPerformAction(request, response, book);
+        return (Book) this.checkRequestTypeAndPerformAction(request, response, book, params);
     }
 
     @Override

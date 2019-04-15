@@ -224,7 +224,8 @@
 <script>
 	var elem = document.querySelector(".container > .row")
 	App.addClass(elem, "content-pane")
-	ProductDisplay.initialize(elem)
+	var obj = new ProductDisplay()
+    obj.initialize(elem)
 </script>
 </body>
 </html>
