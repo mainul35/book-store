@@ -48,8 +48,8 @@ var ProductDisplay = (function () {
                         break
                     }
                 }
-                var details = new ProductDetailsInitializer(data)
-                details.initialize(panel)
+                var details = new ProductDetails()
+                details.initialize(panel, data)
                 history.pushState(id, "Book | "+data.title, "/books/"+id)
             })
         })
