@@ -17,15 +17,18 @@ public abstract class ControllerBase extends AppBase {
     public abstract DomainBase update (DomainBase object);
     public abstract void delete (Long id);
 
-    public Object checkRequestTypeAndPerformAction (HttpServletRequest request, HttpServletResponse response, Object object) {
+    public Object checkRequestTypeAndPerformAction (HttpServletRequest request, HttpServletResponse response, Object object, Map params) {
         if (request.getHeader("x-requested-with") == null) {
             try {
                 response.setContentType("text/html");
-                File file = ResourceUtils.getFile("classpath:templates/spa.html");
+                File file = ResourceUtils.getFile("classpath:templates/site/spa.html");
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 PrintWriter out = response.getWriter();
                 String line = "";
                 while ((line = br.readLine())!=null) {
+                    if (line.contains("<div class=\"container\">")) {
+                        line += "<content-loading-metadata metadata-url='"+request.getRequestURI()+"' object='"+params.get("object").toString()+"' hasParam='"+params.get("hasParam").toString()+"'></content-loading-metadata>";
+                    }
                     out.write(line);
                 }
                 out.close();

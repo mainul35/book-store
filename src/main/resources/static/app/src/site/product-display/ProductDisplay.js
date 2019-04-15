@@ -34,9 +34,9 @@ var ProductDisplay = (function () {
                         break
                     }
                 }
-                var details = new ProductDetailsInitializer(data)
-                details.initialize(panel)
-                history.pushState(id, "Book | "+data.title, "/books/"+id)
+                var details = new ProductDetails()
+                details.initialize(panel, data)
+                history.pushState(id, "Book | "+data.title, "/site/books/"+id)
             })
 
             elem.querySelector(".product-title").addEventListener("click", function (e) {
@@ -58,6 +58,7 @@ var ProductDisplay = (function () {
         initialize: function (panel) {
             App.addCSS("app/src/site/product-details/ProductDetails.css")
             App.addJS("app/src/site/product-details/ProductDetails.js")
+            App.RequestManager.loader.addLoading(panel)
             App.RequestManager.loadContentAfterDomReady(panel, '/book/all', function (container, books) {
                 var tempTemplate = ""
                 books.forEach(function (book) {
@@ -72,7 +73,7 @@ var ProductDisplay = (function () {
                     productTitleElement.innerHTML = book.title
                     var priceElement = element.querySelector(".price")
                     priceElement.setAttribute("product-id", book.id)
-                    priceElement.innerHTML = book.originalPrice
+                    priceElement.innerHTML = "$ "+book.originalPrice
                     tempTemplate += App.domEmelentToHTML(element)
                 })
                 panel.innerHTML = tempTemplate
@@ -80,5 +81,5 @@ var ProductDisplay = (function () {
             })
         },
     }
-}())
+})
 
