@@ -29,37 +29,6 @@ var ProductDetails = (function () {
                 </div>
               </div>
               <div class="product-seller-recommended">
-                <h3 class="mb-5">More from Lee's Store</h3>
-                <div class="recommended-items card-deck">
-                  <div class="card">
-                    <img src="https://via.placeholder.com/157x157" alt="" class="card-img-top">
-                    <div class="card-body">
-                      <h5 class="card-title">U$ 55.00</h5>
-                      <span class="text-muted"><small>T-Shirt Size X - Large - Nickony Brand</small></span>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <img src="https://via.placeholder.com/157x157" alt="" class="card-img-top">
-                    <div class="card-body">
-                      <h5 class="card-title">U$ 55.00</h5>
-                      <span class="text-muted"><small>T-Shirt Size X - Large - Nickony Brand</small></span>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <img src="https://via.placeholder.com/157x157" alt="" class="card-img-top">
-                    <div class="card-body">
-                      <h5 class="card-title">U$ 55.00</h5>
-                      <span class="text-muted"><small>T-Shirt Size X - Large - Nickony Brand</small></span>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <img src="https://via.placeholder.com/157x157" alt="" class="card-img-top">
-                    <div class="card-body">
-                      <h5 class="card-title">U$ 55.00</h5>
-                      <span class="text-muted"><small>T-Shirt Size X - Large - Nickony Brand</small></span>
-                    </div>
-                  </div>
-                </div>
                 <!-- /.recommended-items-->
                 <p class="mb-5 mt-5"><a href="#">See all ads from this seller</a></p>
                 <div class="product-description mb-5">
@@ -101,10 +70,14 @@ var ProductDetails = (function () {
               <p class="text-success"><i class="fa fa-credit-card"></i> 12x or  5x $ 5.00</p>
               <p class="mb-0"><i class="fa fa-truck"></i> Delivery in all territory</p>
               <div class="text-muted mb-2"><small>know more about delivery time and shipping forms</small></div>
-              <label for="quant">Quantity</label>
-              <input type="number" name="quantity" min="1" id="quant" class="form-control mb-5 input-lg" placeholder="Choose the quantity">
-              <button class="btn btn-primary btn-lg btn-block">Buy Now</button>
-              
+              <form class="add-to-cart-form">
+                <div class="form-group">
+                  <label for="quant">Quantity</label>
+                  <input type="number" name="quantity" min="1" length="2..10" id="quant" class="form-control mb-5 input-lg required" placeholder="Choose the quantity">
+                  <span class="quantity-invalid-message"></span>
+                 </div>
+                 <button class="btn btn-submit btn-primary btn-lg btn-block btn-add-to-cart">Add to Cart</button>
+              </form>
             </div>
           </div>
         </div>
@@ -118,7 +91,12 @@ var ProductDetails = (function () {
             elem.querySelector(".product-isbn").innerText = data.isbn
             elem.querySelector(".product-title").innerText = data.title
             elem.querySelector(".product-gallery-featured > img").setAttribute("src", `/image?imgId=${data.photo.id}&size=240`)
+            elem.querySelector(".btn-add-to-cart").addEventListener("click", function (e) {
+                console.log("Adding to cart")
+            })
             panel.innerHTML = App.domEmelentToHTML(elem)
+            var validator = new App.Validator()
+            validator.initialize(panel.querySelector("form.add-to-cart-form"))
         }
     }
 })
