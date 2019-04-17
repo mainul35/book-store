@@ -50,7 +50,7 @@ var ProductDisplay = (function () {
                 }
                 var details = new ProductDetails()
                 details.initialize(panel, data)
-                history.pushState(id, "Book | "+data.title, "/books/"+id)
+                history.pushState(id, "Book | "+data.title, "/site/books/"+id)
             })
         })
     }
