@@ -1,15 +1,31 @@
 package com.book.entity;
 
+import com.book.entity.productInfo.Book;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 public class Order extends DomainBase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    @OneToOne(targetEntity = Cart.class, fetch = FetchType.EAGER)
-    Cart cartReference = new Cart();
+    private Long id;
+    @OneToOne(targetEntity = Book.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable=false, name="book_id")
+    private Book book = new Book();
+    @Column
+    private Integer quantity;
+    @Column
+    private BigDecimal basePrice = BigDecimal.valueOf(0D);
+    @Column
+    private BigDecimal itemTotal = BigDecimal.valueOf(0D);
+    @Column
+    private BigDecimal priceToBeDiscounted = BigDecimal.valueOf(0D);
+    @Column
+    private BigDecimal taxToBeAdded = BigDecimal.valueOf(0D);
+    @Column(nullable = true)
+    private String discountLog;
     @Column
     private String createdBy;
     @Column
@@ -66,11 +82,51 @@ public class Order extends DomainBase {
         this.id = id;
     }
 
-    public Cart getCartReference() {
-        return cartReference;
+    public Book getBook() {
+        return book;
     }
 
-    public void setCartReference(Cart cartReference) {
-        this.cartReference = cartReference;
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public BigDecimal getItemTotal() {
+        return itemTotal;
+    }
+
+    public void setItemTotal(BigDecimal itemTotal) {
+        this.itemTotal = itemTotal;
+    }
+
+    public BigDecimal getPriceToBeDiscounted() {
+        return priceToBeDiscounted;
+    }
+
+    public void setPriceToBeDiscounted(BigDecimal priceToBeDiscounted) {
+        this.priceToBeDiscounted = priceToBeDiscounted;
+    }
+
+    public BigDecimal getTaxToBeAdded() {
+        return taxToBeAdded;
+    }
+
+    public void setTaxToBeAdded(BigDecimal taxToBeAdded) {
+        this.taxToBeAdded = taxToBeAdded;
     }
 }

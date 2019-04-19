@@ -4,7 +4,7 @@ import com.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.book.entity.Book;
+import com.book.entity.productInfo.Book;
 
 import java.util.List;
 

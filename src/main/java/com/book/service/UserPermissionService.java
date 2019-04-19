@@ -1,7 +1,6 @@
 package com.book.service;
 
-import com.book.entity.User;
-import com.book.entity.UserPermission;
+import com.book.entity.auth.UserPermission;
 import com.book.repository.UserPermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -2,14 +2,11 @@ package com.book.controller.common;
 
 import com.book.config.security.AuthenticationConfiguration;
 import com.book.controller.ControllerBase;
-import com.book.entity.Book;
+import com.book.entity.productInfo.Book;
 import com.book.entity.DomainBase;
-import com.book.entity.User;
+import com.book.entity.auth.User;
 import com.book.repository.UserService;
-import com.book.service.AttachmentService;
 import com.book.service.BookService;
-import com.book.util.AppBase;
-import com.book.util.ImageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

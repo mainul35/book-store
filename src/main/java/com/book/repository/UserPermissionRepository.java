@@ -1,7 +1,6 @@
 package com.book.repository;
 
-import com.book.entity.User;
-import com.book.entity.UserPermission;
+import com.book.entity.auth.UserPermission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

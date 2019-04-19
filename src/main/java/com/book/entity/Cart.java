@@ -1,5 +1,9 @@
 package com.book.entity;
 
+import com.book.entity.accountInfo.Account;
+import com.book.entity.auth.User;
+import com.book.entity.productInfo.Book;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,9 +15,9 @@ public class Cart extends DomainBase {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     @OneToMany(orphanRemoval=true, fetch= FetchType.LAZY)
-    List<Book> cartItems = new ArrayList<>();
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    User cartOwner = new User();
+    List<Order> cartItems = new ArrayList<>();
+    @OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER)
+    Account cartOwner = new Account();
     @Column
     private String createdBy;
     @Column
@@ -70,19 +74,19 @@ public class Cart extends DomainBase {
         this.id = id;
     }
 
-    public List<Book> getCartItems() {
-        return cartItems;
-    }
-
-    public void addCartItem(Book cartItem) {
-        this.cartItems.add(cartItem);
-    }
-
-    public User getCartOwner() {
+    public Account getCartOwner() {
         return cartOwner;
     }
 
-    public void setCartOwner(User cartOwner) {
+    public void setCartOwner(Account cartOwner) {
         this.cartOwner = cartOwner;
+    }
+
+    public List<Order> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<Order> cartItems) {
+        this.cartItems = cartItems;
     }
 }

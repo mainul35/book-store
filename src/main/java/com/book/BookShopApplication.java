@@ -1,7 +1,11 @@
 package com.book;
 
 import com.book.config.security.permission.Permission;
-import com.book.entity.*;
+import com.book.entity.auth.Role;
+import com.book.entity.auth.User;
+import com.book.entity.auth.UserPermission;
+import com.book.entity.productInfo.Category;
+import com.book.entity.productInfo.Offer;
 import com.book.service.CategoryService;
 import com.book.service.RoleService;
 import com.book.service.UserPermissionService;
