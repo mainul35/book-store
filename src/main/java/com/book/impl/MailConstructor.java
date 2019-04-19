@@ -7,7 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
-import com.book.entity.User;
+import com.book.entity.auth.User;
 
 @Component
 public class MailConstructor {

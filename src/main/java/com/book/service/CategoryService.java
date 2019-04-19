@@ -1,6 +1,6 @@
 package com.book.service;
 
-import com.book.entity.Category;
+import com.book.entity.productInfo.Category;
 import com.book.repository.CategoryRepository;
 import com.book.util.AppBase;
 import org.springframework.beans.factory.annotation.Autowired;

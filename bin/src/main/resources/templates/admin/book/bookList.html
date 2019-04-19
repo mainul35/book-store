@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+>
+<body>
+<div class="content">
+    <div class="table-responsive">
+        <table id="bookListTable" class="table table-bordered table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>List Price</th>
+                <!--<th>Discount</th>-->
+                <th>Active?</th>
+                <th>Image</th>
+                <th>Operation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="book : ${bookList}">
+                <tr>
+                    <!-- <td><input hidden="hidden" name="id" th:value="${book.id}" /></td> -->
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.authors}"></td>
+                    <td th:text="${book.category.getCategoryName()}"></td>
+                    <td th:text="${book.getOriginalPrice().doubleValue()}"></td>
+                    <!--<td th:text="${book.getOffer().doubleValue()}"></td>-->
+                    <td th:text="${book.active}"></td>
+                    <td><img th:src="${'/image?imgId='+book.getPhoto().getId()}"></td>
+                    <td>delete</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <h1 th:text="${createdBy}"></h1>
+        <h1 th:text="${createdOn}"></h1>
+    </div>
+</div>
+</body>
+</html>

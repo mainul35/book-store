@@ -1,6 +1,6 @@
 package com.book.service;
 
-import com.book.entity.Role;
+import com.book.entity.auth.Role;
 import com.book.repository.RoleRepository;
 import com.book.repository.UserRoleRepository;
 
